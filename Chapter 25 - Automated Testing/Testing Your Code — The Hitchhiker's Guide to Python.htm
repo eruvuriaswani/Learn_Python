@@ -1,0 +1,531 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Testing Your Code — The Hitchhiker's Guide to Python</title>
+    
+    <link rel="stylesheet" href="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/pygments.css" type="text/css">
+    <link rel="stylesheet" href="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/badge_only.css" type="text/css">
+    
+    <script src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/track.js" data-track-path="https://track.gaug.es/track.gif" data-site-id="56ca79a64b2ffa7a470027ea" id="gauges-tracker" async="" type="text/javascript"></script><script src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/widgets.js" id="twitter-wjs"></script><script src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/jquery-2.js"></script>
+    <script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/jquery-migrate-1.js"></script>
+    <script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/underscore.js"></script>
+    <script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/doctools.js"></script>
+    <script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/readthedocs-doc-embed.js"></script>
+    <link rel="top" title="The Hitchhiker's Guide to Python" href="http://docs.python-guide.org/en/latest/">
+    <link rel="next" title="Logging" href="http://docs.python-guide.org/en/latest/writing/logging/">
+    <link rel="prev" title="Documentation" href="http://docs.python-guide.org/en/latest/writing/documentation/">
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.python-guide.org/en/latest/writing/tests/">
+
+<link rel="stylesheet" href="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/readthedocs-doc-embed.css" type="text/css">
+
+<script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'writing/tests'
+</script>
+
+<script type="text/javascript" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --><script src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/button.js" async="" charset="utf-8" type="text/javascript"></script></head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="testing-your-code">
+<h1>Testing Your Code<a class="headerlink" href="#testing-your-code" title="Permalink to this headline">¶</a></h1>
+<p>Testing your code is very important.</p>
+<p>Getting used to writing testing code and running this code in parallel is now
+considered a good habit. Used wisely, this method helps you define more
+precisely your code’s intent and have a more decoupled architecture.</p>
+<p>Some general rules of testing:</p>
+<ul class="simple">
+<li>A testing unit should focus on one tiny bit of functionality and prove it
+correct.</li>
+<li>Each test unit must be fully independent. Each test must be able to run
+alone, and also within the test suite, regardless of the order that they are
+called. The implication of this rule is that each test must be loaded with
+a fresh dataset and may have to do some cleanup afterwards. This is
+usually handled by <code class="xref py py-meth docutils literal"><span class="pre">setUp()</span></code> and <code class="xref py py-meth docutils literal"><span class="pre">tearDown()</span></code> methods.</li>
+<li>Try hard to make tests that run fast. If one single test needs more than a
+few milliseconds to run, development will be slowed down or the tests will
+not be run as often as is desirable. In some cases, tests can’t be fast
+because they need a complex data structure to work on, and this data structure
+must be loaded every time the test runs. Keep these heavier tests in a
+separate test suite that is run by some scheduled task, and run all other
+tests as often as needed.</li>
+<li>Learn your tools and learn how to run a single test or a test case. Then,
+when developing a function inside a module, run this function’s tests
+frequently, ideally automatically when you save the code.</li>
+<li>Always run the full test suite before a coding session, and run it again
+after. This will give you more confidence that you did not break anything
+in the rest of the code.</li>
+<li>It is a good idea to implement a hook that runs all tests before pushing
+code to a shared repository.</li>
+<li>If you are in the middle of a development session and have to interrupt
+your work, it is a good idea to write a broken unit test about what you
+want to develop next. When coming back to work, you will have a pointer
+to where you were and get back on track faster.</li>
+<li>The first step when you are debugging your code is to write a new test
+pinpointing the bug. While it is not always possible to do, those bug
+catching tests are among the most valuable pieces of code in your project.</li>
+<li>Use long and descriptive names for testing functions. The style guide here
+is slightly different than that of running code, where short names are
+often preferred. The reason is testing functions are never called explicitly.
+<code class="docutils literal"><span class="pre">square()</span></code> or even <code class="docutils literal"><span class="pre">sqr()</span></code> is ok in running code, but in testing code you
+would have names such as <code class="docutils literal"><span class="pre">test_square_of_number_2()</span></code>,
+<code class="docutils literal"><span class="pre">test_square_negative_number()</span></code>. These function names are displayed when
+a test fails, and should be as descriptive as possible.</li>
+<li>When something goes wrong or has to be changed, and if your code has a
+good set of tests, you or other maintainers will rely largely on the
+testing suite to fix the problem or modify a given behavior. Therefore
+the testing code will be read as much as or even more than the running
+code. A unit test whose purpose is unclear is not very helpful in this
+case.</li>
+<li>Another use of the testing code is as an introduction to new developers. When
+someone will have to work on the code base, running and reading the related
+testing code is often the best thing that they can do to start. They will
+or should discover the hot spots, where most difficulties arise, and the
+corner cases. If they have to add some functionality, the first step should
+be to add a test to ensure that the new functionality is not already a
+working path that has not been plugged into the interface.</li>
+</ul>
+<div class="section" id="the-basics">
+<h2>The Basics<a class="headerlink" href="#the-basics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="unittest">
+<h3>Unittest<a class="headerlink" href="#unittest" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://docs.python.org/library/unittest.html#module-unittest" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> is the batteries-included test module in the Python standard
+library. Its API will be familiar to anyone who has used any of the
+JUnit/nUnit/CppUnit series of tools.</p>
+<p>Creating test cases is accomplished by subclassing <a class="reference external" href="http://docs.python.org/library/unittest.html#unittest.TestCase" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">unittest.TestCase</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">class</span> <span class="nc">MyTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As of Python 2.7 unittest also includes its own test discovery mechanisms.</p>
+<blockquote>
+<div><a class="reference external" href="http://docs.python.org/library/unittest.html">unittest in the standard library documentation</a></div></blockquote>
+</div>
+<div class="section" id="doctest">
+<h3>Doctest<a class="headerlink" href="#doctest" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="http://docs.python.org/library/doctest.html#module-doctest" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">doctest</span></code></a> module searches for pieces of text that look like interactive
+Python sessions in docstrings, and then executes those sessions to verify that
+they work exactly as shown.</p>
+<p>Doctests have a different use case than proper unit tests: they are usually
+less detailed and don’t catch special cases or obscure regression bugs. They
+are useful as an expressive documentation of the main use cases of a module and
+its components. However, doctests should run automatically each time the full
+test suite runs.</p>
+<p>A simple doctest in a function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">"""Return the square of x.</span>
+
+<span class="sd">    &gt;&gt;&gt; square(2)</span>
+<span class="sd">    4</span>
+<span class="sd">    &gt;&gt;&gt; square(-2)</span>
+<span class="sd">    4</span>
+<span class="sd">    """</span>
+
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When running this module from the command line as in <code class="docutils literal"><span class="pre">python</span> <span class="pre">module.py</span></code>, the
+doctests will run and complain if anything is not behaving as described in the
+docstrings.</p>
+</div>
+</div>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="py-test">
+<h3>py.test<a class="headerlink" href="#py-test" title="Permalink to this headline">¶</a></h3>
+<p>py.test is a no-boilerplate alternative to Python’s standard unittest module.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install pytest
+</pre></div>
+</div>
+<p>Despite being a fully-featured and extensible test tool, it boasts a simple
+syntax. Creating a test suite is as easy as writing a module with a couple of
+functions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># content of test_sample.py</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">test_answer</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">func</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>and then running the <cite>py.test</cite> command</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> py.test
+<span class="go">=========================== test session starts ============================</span>
+<span class="go">platform darwin -- Python 2.7.1 -- pytest-2.2.1</span>
+<span class="go">collecting ... collected 1 items</span>
+
+<span class="go">test_sample.py F</span>
+
+<span class="go">================================= FAILURES =================================</span>
+<span class="go">_______________________________ test_answer ________________________________</span>
+
+<span class="go">    def test_answer():</span>
+<span class="gp">&gt;</span>       assert func<span class="o">(</span>3<span class="o">)</span> <span class="o">==</span> 5
+<span class="go">E       assert 4 == 5</span>
+<span class="go">E        +  where 4 = func(3)</span>
+
+<span class="go">test_sample.py:5: AssertionError</span>
+<span class="go">========================= 1 failed in 0.02 seconds =========================</span>
+</pre></div>
+</div>
+<p>is far less work than would be required for the equivalent functionality with
+the unittest module!</p>
+<blockquote>
+<div><a class="reference external" href="http://pytest.org/latest/">py.test</a></div></blockquote>
+</div>
+<div class="section" id="nose">
+<h3>Nose<a class="headerlink" href="#nose" title="Permalink to this headline">¶</a></h3>
+<p>nose extends unittest to make testing easier.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install nose
+</pre></div>
+</div>
+<p>nose provides automatic test discovery to save you the hassle of manually
+creating test suites. It also provides numerous plugins for features such as
+xUnit-compatible test output, coverage reporting, and test selection.</p>
+<blockquote>
+<div><a class="reference external" href="http://readthedocs.org/docs/nose/en/latest/">nose</a></div></blockquote>
+</div>
+<div class="section" id="tox">
+<h3>tox<a class="headerlink" href="#tox" title="Permalink to this headline">¶</a></h3>
+<p>tox is a tool for automating test environment management and testing against
+multiple interpreter configurations</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install tox
+</pre></div>
+</div>
+<p>tox allows you to configure complicated multi-parameter test matrices via a
+simple ini-style configuration file.</p>
+<blockquote>
+<div><a class="reference external" href="http://testrun.org/tox/latest/">tox</a></div></blockquote>
+</div>
+<div class="section" id="unittest2">
+<h3>Unittest2<a class="headerlink" href="#unittest2" title="Permalink to this headline">¶</a></h3>
+<p>unittest2 is a backport of Python 2.7’s unittest module which has an improved
+API and better assertions over the one available in previous versions of Python.</p>
+<p>If you’re using Python 2.6 or below, you can install it with pip</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install unittest2
+</pre></div>
+</div>
+<p>You may want to import the module under the name unittest to make porting code
+to newer versions of the module easier in the future</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest2</span> <span class="kn">as</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">MyTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>This way if you ever switch to a newer Python version and no longer need the
+unittest2 module, you can simply change the import in your test module without
+the need to change any other code.</p>
+<blockquote>
+<div><a class="reference external" href="http://pypi.python.org/pypi/unittest2">unittest2</a></div></blockquote>
+</div>
+<div class="section" id="mock">
+<h3>mock<a class="headerlink" href="#mock" title="Permalink to this headline">¶</a></h3>
+<p><code class="xref py py-mod docutils literal"><span class="pre">unittest.mock</span></code> is a library for testing in Python. As of Python 3.3, it is
+available in the
+<a class="reference external" href="https://docs.python.org/dev/library/unittest.mock">standard library</a>.</p>
+<p>For older versions of Python:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install mock
+</pre></div>
+</div>
+<p>It allows you to replace parts of your system under test with mock objects and
+make assertions about how they have been used.</p>
+<p>For example, you can monkey-patch a method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+<span class="n">thing</span> <span class="o">=</span> <span class="n">ProductionClass</span><span class="p">()</span>
+<span class="n">thing</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">thing</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+
+<span class="n">thing</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To mock classes or objects in a module under test, use the <code class="docutils literal"><span class="pre">patch</span></code> decorator.
+In the example below, an external search system is replaced with a mock that
+always returns the same result (but only for the duration of the test).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mock_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">MockSearchQuerySet</span><span class="p">(</span><span class="n">SearchQuerySet</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">([</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">MockSearchQuerySet</span><span class="p">()</span>
+
+<span class="c1"># SearchForm here refers to the imported class reference in myapp,</span>
+<span class="c1"># not where the SearchForm class itself is imported from</span>
+<span class="nd">@mock.patch</span><span class="p">(</span><span class="s1">'myapp.SearchForm.search'</span><span class="p">,</span> <span class="n">mock_search</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_new_watchlist_activities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># get_search_results runs a search and iterates over the result</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">myapp</span><span class="o">.</span><span class="n">get_search_results</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="s2">"fish"</span><span class="p">)),</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Mock has many other ways you can configure it and control its behavior.</p>
+<blockquote>
+<div><a class="reference external" href="http://www.voidspace.org.uk/python/mock/">mock</a></div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="http://docs.python-guide.org/en/latest/">
+    <img class="logo" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/python-guide-logo.png" title="The Hitchhiker's Guide to Python">
+  </a>
+</p>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python
+ developers a best practice handbook to the installation, configuration,
+ and usage of Python on a daily basis.
+</p>
+
+
+<h3>Get Updates</h3>
+<p>Receive updates on new releases and upcoming projects.</p>
+
+<p><iframe src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/github-btn.htm" allowtransparency="true" scrolling="0" frameborder="0" height="20" width="200"></iframe></p>
+
+<p><iframe data-screen-name="kennethreitz" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/follow_button.htm" title="Twitter Follow Button" style="position: static; visibility: visible; width: 136px; height: 20px;" class="twitter-follow-button twitter-follow-button-rendered" allowtransparency="true" scrolling="no" id="twitter-widget-0" frameborder="0"></iframe> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
+
+<p><a href="http://tinyletter.com/kennethreitz">Join Mailing List</a>.</p>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available for pre-order in tangible book form!</p>
+
+<a href="https://www.amazon.com/Hitchhikers-Guide-Python-Practices-Development/dp/1491933178/ref=as_li_ss_il?ie=UTF8&amp;linkCode=li2&amp;tag=bookforkind-20&amp;linkId=804806ebdacaf3b56567347f3afbdbca" target="_blank"><img src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/q.jpg" border="0"></a><img src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/ir.gif" alt="" style="border:none !important; margin:0px !important;" height="1" border="0" width="1">
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org/">DjangoGirls</a> organization.</p>
+
+<h3>Other Projects</h3>
+
+<p>More <a href="http://kennethreitz.org/">Kenneth Reitz</a> projects:</p>
+<ul>
+    <li><a href="http://pep8.org/">pep8.org</a></li>
+    <li><a href="http://python-requests.org/">Requests: HTTP for Humans</a></li>
+    <li><a href="https://github.com/kennethreitz/records">Records: SQL for Humans</a></li>
+    <li><a href="http://www.git-legit.org/">Legit: Git for Humans</a></li>
+    <li><a href="http://docs.python-tablib.org/en/latest/">Tablib: Tabular Datasets</a></li>
+    <li><a href="http://markdownplease.com/">Markdown, Please!</a></li>
+</ul>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="http://docs.python-guide.org/en/latest/">English</a></li>
+  <li><a href="http://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="http://pythonguidecn.readthedocs.org/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guide-ja.readthedocs.org/en/latest/">Japanese</a></li>
+  <li><a href="http://python-guide-kr.readthedocs.org/ko/latest/">Korean</a></li>
+</ul>
+  <h3><a href="http://docs.python-guide.org/en/latest/">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing Your Code</a><ul>
+<li><a class="reference internal" href="#the-basics">The Basics</a><ul>
+<li><a class="reference internal" href="#unittest">Unittest</a></li>
+<li><a class="reference internal" href="#doctest">Doctest</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools">Tools</a><ul>
+<li><a class="reference internal" href="#py-test">py.test</a></li>
+<li><a class="reference internal" href="#nose">Nose</a></li>
+<li><a class="reference internal" href="#tox">tox</a></li>
+<li><a class="reference internal" href="#unittest2">Unittest2</a></li>
+<li><a class="reference internal" href="#mock">mock</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="http://docs.python-guide.org/en/latest/">Documentation overview</a><ul>
+      <li>Previous: <a href="http://docs.python-guide.org/en/latest/writing/documentation/" title="previous chapter">Documentation</a></li>
+      <li>Next: <a href="http://docs.python-guide.org/en/latest/writing/logging/" title="next chapter">Logging</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search/" method="get">
+      <input name="q" type="text">
+      <input value="Go" type="submit">
+      <input name="check_keywords" value="yes" type="hidden">
+      <input name="area" value="default" type="hidden">
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '56ca79a64b2ffa7a470027ea');
+    t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+    t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      ©2016. A <a href="http://kennethreitz.com/pages/open-projects.html">Kenneth Reitz</a> Project. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a>.
+      
+    </div>
+
+    
+    <a href="https://github.com/kennethreitz/python-guide" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="Testing%20Your%20Code%20%E2%80%94%20The%20Hitchhiker%27s%20Guide%20to%20Python_files/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" class="github">
+    </a>
+    
+
+    
+  
+<!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+  <div class="rst-versions rst-badge" data-toggle="rst-versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">&nbsp;</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+         <strong> 
+        <dd><a href="http://docs.python-guide.org/en/latest/writing/tests/">latest</a></dd>
+         </strong> 
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="http://readthedocs.org/projects/python-guide/downloads/pdf/latest/">PDF</a></dd>
+        
+        <dd><a href="http://readthedocs.org/projects/python-guide/downloads/htmlzip/latest/">HTML</a></dd>
+        
+        <dd><a href="http://readthedocs.org/projects/python-guide/downloads/epub/latest/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="http://readthedocs.org/projects/python-guide/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="http://readthedocs.org/projects/python-guide/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="http://readthedocs.org/projects/python-guide/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/kennethreitz/python-guide/blob/master/docs/writing/tests.rst">View</a>
+        </dd>
+        <dd>
+          <a href="https://github.com/kennethreitz/python-guide/edit/master/docs/writing/tests.rst">Edit</a>
+        </dd>
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="https://readthedocs.org/projects/python-guide/search/" method="get">
+              <input name="q" placeholder="Search docs" type="text">
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr>
+      
+      Free document hosting provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+      
+
+      
+    </div>
+  </div>
+  
+
+</div>
+<iframe style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: medium none;" allowfullscreen="true" allowtransparency="true" scrolling="no" id="rufous-sandbox" frameborder="0"></iframe></body></html>

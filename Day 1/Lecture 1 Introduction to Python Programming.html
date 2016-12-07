@@ -1,0 +1,231 @@
+<html>
+
+<head>
+
+    <title>Lecture 1 Introduction to Python Programming</title>
+
+    <!-- start of nbconvert's html header -->
+    <script type="text/javascript" src="/git_static/461296a7f900ef1aa6960f8020728f585d4a8dc0/vendor/jquery.1.7.2.min.js"></script>
+    <script type="text/javascript" src="/git_static/461296a7f900ef1aa6960f8020728f585d4a8dc0/vendor/jquery.flot.min.js"></script>
+    <link href="/static/css/nbviewer.css" rel="stylesheet">
+
+    <link href="/git_static/461296a7f900ef1aa6960f8020728f585d4a8dc0//css/application.css" rel="stylesheet" type="text/css"/>
+
+
+
+    <script type="text/javascript" src="/git_static/461296a7f900ef1aa6960f8020728f585d4a8dc0//js/application.js"></script>
+
+
+
+
+<script type="text/javascript">
+    (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.1.min.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!==typeof f?
+    g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
+    mixpanel.init("e29ca17449e6f58b3c0625ae66b21ba9");
+    
+        window.username = "";
+        mixpanel.identify("");
+    
+    mixpanel.track('RegisterLogin page');
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-27761864-6', 'wakari.io');
+  ga('send', 'pageview');
+
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount',  'UA-27761864-6']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script>
+  $(function(){
+      $('.unescapelink').click(function(){
+        $('#unescape').submit();
+      });
+  })
+
+  var disqus_developer =  0 ; // this would set it to developer mode
+
+</script>
+<input type='hidden' name='csrfmiddlewaretoken' value='fRmxerCWpGSOOp0bmS50CBZLRBIWILoa' />  
+</head>
+
+<body>
+
+<style type="text/css">
+  .al-navbar {
+    background-color: #fafafa;
+    background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+    background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+    border-bottom: 1px solid #d4d4d4;
+  }
+
+</style>
+<style>
+.al-navbar .well {
+  padding: 2px 5px 2px 5px;
+}
+.al-navbar-left {
+  padding-left: 5px;
+}
+
+.al-navbar-right {
+  padding-right: 5px;
+
+}
+
+.navbar .nav,
+.navbar .nav > li {
+  float:none;
+  display:inline-block;
+  *display:inline; /* ie7 fix */
+  *zoom:1; /* hasLayout ie7 trigger */
+  vertical-align: top;
+}
+
+.navbar-inner {
+  text-align:center;
+}
+
+.subnav {
+  text-align: center;
+  font-size: 12px;
+  min-height: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.subnav .nav-pills > li {
+  float: none !important;
+  display: inline-block !important;
+}
+
+.subnav .nav-pills > li > a {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.pagination-right {
+  text-align: right;
+}
+
+.subnav .nav > li > a:hover {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #0088cc;
+}
+
+.stats {
+  padding-right: 5px;
+}
+.wrapped_page{
+  position : fixed;
+  top : 94px;
+}
+
+.nav-pills > li > button {
+    bor der-radius: 5px 5px 5px 5px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+
+.nav {padding-bottom: 6px;}
+</style>
+
+
+
+<div class="row-fluid al-navbar">
+  <div class="span3 al-navbar-left">
+    <a class="brand" href="http://continuum.io" target="_blank">
+      <img src="/git_static/461296a7f900ef1aa6960f8020728f585d4a8dc0/img/cio_color_on_white_logo.png" width=35 height=23>
+    </a>
+    <a class="brand-text" href="/wakari">Wakari<span id="versionLbl"></span></a>
+  </div>
+  <div class="span6 pagination-centered" style="text-align:center">
+    <div class="nb-title">Lecture 1 Introduction to Python Programming</div>
+  </div>
+  
+</div>
+
+<div class="subnav">
+  <ul class="nav nav-pills">
+    
+    <li>
+      <button class="btn btn-large btn-success registerloginbutton">Run/Edit this Notebook</button>
+    </li>
+  </ul>
+</div>
+
+<!--  end bundle stats block--->
+
+<div class="container">
+
+    <!-- Start Disqus comments -->
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'wakari'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+    <!-- Finish Disqus comments -->
+</div>
+
+<div class="wrapped_page"> 
+    <iframe  src="/nb/urls///wakari.io/static/notebooks/Lecture_1_Introduction_to_Python_Programming.ipynb?has_login=False"></iframe>
+
+</div>
+
+<script>
+  window.username = "AnonymousUser";
+  nexturl = "/nb/nbremotecopy/urls///wakari.io/static/notebooks/Lecture_1_Introduction_to_Python_Programming.ipynb";
+  $(function(){
+      $('.registerloginbutton').click(function(){
+          if (window.username != "AnonymousUser"){
+            window.location=nexturl;
+          }
+          else{
+              ajaxforms = rrequire("accounts/ajaxforms");
+              ajaxforms.display_dialog(nexturl, "#backbonemodal");
+          }
+      });
+  });
+</script>
+
+<div id="backbonemodal" class="modal hide registerloginmodal"></div>
+
+</body>
+</html>
+

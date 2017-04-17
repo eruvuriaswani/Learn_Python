@@ -10,10 +10,6 @@ def multi(x, y):
 def div(x, y):
     return(x + y)
 
-print("calc", __name__)
 
-# void main():
-if __name__ == "__main__":
-    print(add(3, 5)==8)
-    
-    
+print(add(3, 5))
+print("calc", __name__)

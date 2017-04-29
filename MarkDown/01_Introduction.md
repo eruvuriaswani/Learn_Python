@@ -1,6 +1,5 @@
-
 # Chapter 1 - Introduction to Python
-__________
+--- 
 
 [Python](http://www.python.org) is a very **High Level, object-oriented, dynamic<sup>1</sup>, strong typing<sup>2</sup>, interpreted** & **interactive** programming language.
 
@@ -17,7 +16,7 @@ Duck typing is an application of the duck test in type safety. It requires that 
 It is also an open source language (with license compatible with the *General Public License (GPL)*, but less restrictive, allowing Python to be even incorporated into proprietary products). Its specification is maintained by the [Python Software Foundation](http://www.python.org/psf/) (PSF).
 
 ## Key Features
----
+----
 
 * It uses an elegant syntax, making the code easier to read
 * Easy-to-use language that makes it simple to get code working. This makes it ideal for prototype development and other ad-hoc programming tasks, without compromising maintainability
@@ -49,6 +48,7 @@ It is possible to integrate Python with other languages such as C and Fortran. I
 ---------
 
 The language was created in 1990 by **Guido van Rossum**, at National Research Institute for Mathematics and Computer Science in the Netherlands (CWI) and had originally focused on users as physicists and engineers. Python was designed from another existing language at the time, called ABC.
+
 ![Guido van Rossum](files/GuidoVanRossum.png)
 
 ## Versions

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Automated Tests in Python</title>
+    <link rel="stylesheet" href="Automated%20Tests%20in%20Python_files/migrateup.css">
+    <link rel="stylesheet" href="Automated%20Tests%20in%20Python_files/mailchimp.css">
+    <link rel="stylesheet" href="Automated%20Tests%20in%20Python_files/pygments_default.css">
+
+    <script src="Automated%20Tests%20in%20Python_files/analytics.js" async=""></script><script src="Automated%20Tests%20in%20Python_files/jquery.js"></script>
+    <script src="Automated%20Tests%20in%20Python_files/migrateup.js"></script>
+    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-16434333-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+  <body>
+    <div id="main-container">
+       
+	<nav id="main">
+	    <a class="sitelink" href="https://migrateup.com/"><span style="font-size: 8pt">Aaron Maxwell's</span><br>
+	    <span style="font-size: 14pt">MigrateUp</span>
+	    </a>
+	    <ul>
+		<li><a href="https://migrateup.com/python/">Archive</a></li>
+		<li><a href="https://migrateup.com/store/advanced-python-book/">Book</a></li>
+		<li><a href="https://migrateup.com/training/">Training</a></li>
+		<li>
+   <a href="https://migrateup.com/accounts/login/?next=https%3A//migrateup.com/automated-tests-types-for-python/">Log in</a>
+   
+        </li>
+		
+	    </ul>
+
+	    <div id="newsletter-box">
+		<div class="email-navbox-header">Powerful<br> Python<br> Newsletter</div>
+		<div class="email-navbox-text">Not for<br> beginners.</div>
+		
+<!-- Begin MailChimp Signup Form -->
+<div id="mc_embed_signup_box">
+<form action="//migrateup.us9.list-manage.com/subscribe/post?u=01e2110d07a384722260b49c8&amp;id=e58a207250" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <div id="mc_embed_signup_scroll">
+	
+	<input name="EMAIL" class="email" id="mce-EMAIL" placeholder="Enter your email..." required="" type="email">
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;"><input name="b_01e2110d07a384722260b49c8_e58a207250" tabindex="-1" type="text"></div>
+    <div class="clear"><input value="Join us!" name="subscribe" id="mc-embedded-subscribe" class="button" type="submit"></div>
+    </div>
+    
+    <input name="REFERRER" id="REFERRER" value="https://www.google.co.in" type="hidden"> 
+<input name="LANDING" id="LANDING" value="https://migrateup.com/automated-tests-types-for-python/" type="hidden"> 
+<input name="FORMTYPE" id="FORMTYPE" value="navbox" type="hidden"> 
+<input name="SIGNUPPAGE" id="SIGNUPPAGE" value="https://migrateup.com/automated-tests-types-for-python/" type="hidden">
+
+    
+
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+
+	    </div> <!-- id="newsletter-box" -->
+
+	</nav>
+	<div id="content-container">
+	    
+	    
+
+
+
+<h1>Automated Tests in Python</h1>
+
+<div class="teaser">Making your tests work harder <em>and</em> smarter.. to
+make your life easier.</div>
+<p class="originally">Originally published in the <a href="https://migrateup.com/python-newsletter/">Powerful Python Newsletter</a></p>
+
+
+<p>Like any good developer, you write tests all the
+time. Regardless of whether you practice test-driven development,
+write your tests last, or somewhere in between, you are already sold
+on the benefits. In modern programming, this is expected in most
+engineering teams - a great situation!</p>
+
+<p>What's not universally clear: when most people say "unit tests",
+they really mean "automated tests" - and for Python applications,
+there are three distinct kinds of automated test you can write. Each
+have their own strengths, and are appropriate in different
+situations:</p>
+
+<ul>
+    <li>Unit tests,</li>
+    <li>Integration tests, and</li>
+    <li>End-to-end tests.</li>
+</ul>
+
+<p>Let's look at what these are.</p>
+
+<h2>Unit Tests</h2>
+
+<p>A <em>unit test</em> covers a specific component in isolation. This
+"component" can be a function, a class, or some composition of them
+together. As I define it here, a unit test checks for a
+<strong>specific response</strong> to a <strong>particular
+input</strong>.  For example, suppose you have implemented a callable
+named <code>wordcount</code>, which takes a single string argument - a
+body of text - and returns a dictionary. The dictionary's keys are
+words in the body of text; the values are the number of times that
+word appears:
+</p>
+
+
+<div style="display: block; padding-bottom: 0.35em;" class="highlight"><pre><ol><li><div class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">wordcount</span><span class="p">(</span><span class="s">'foo bar foo  '</span><span class="p">)</span>
+</div></li><li><div class="line"><span class="p">{</span><span class="s">'foo'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</div></li></ol></pre></div>
+
+
+
+<p>A simple unit test for this might look like:</p>
+
+
+<div class="highlight"><pre><ol><li><div class="line"><span class="kn">from</span> <span class="nn">wordcount</span> <span class="kn">import</span> <span class="n">wordcount</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line"><span class="k">class</span> <span class="nc">TestUnit</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">test_wordcount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span>
+</div></li><li><div class="line">            <span class="p">{</span><span class="s">'foo'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'bar'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</div></li><li><div class="line">            <span class="n">wordcount</span><span class="p">(</span><span class="s">'foo bar foo  '</span><span class="p">))</span>
+</div></li></ol></pre></div>
+
+
+
+<p>The key idea of a unit test - testing a component <em>in
+isolation</em> - extends in some non-obvious ways. Strictly speaking,
+an automated test is <strong>not</strong> a unit test if it does any
+of the following:</p>
+
+<ul>
+    <li>Any operation over the network</li>
+    <li>Read from or write to any data store</li>
+    <li>Connect with any third-party service or API</li>
+    <li>Touch the file system, except perhaps to load some initial test data or a fixture</li>
+</ul>
+
+<p>These are more properly thought of as integration tests. In
+practice, we've all seen (and written) tests that we call "unit
+tests", and which do one or more of the above. More on this later.</p>
+
+<h2>Integration Tests</h2>
+
+<p>An <em>integration test</em> checks how two
+different components or subsystems interact with each other. Like a
+unit test, it generally checks for a specific response to a particular
+input, though what constitutes "input" can be a little more
+complicated.
+</p>
+
+<p>One category of integration test has to do with how your
+application works (or doesn't) with some external resource:</p>
+
+<ul>
+    <li>Your Python code persists a set of records to a PostgreSQL
+    table, in a way that triggers a stored procedure. You want to
+    verify the final outcome.</li>
+    <li>Your Python code inserts a document into a Mongo
+    collection, and you want to verify that it includes all the
+    required fields.</li>
+    <li>A side effect of your code is that a certain file is uploaded
+    to an AWS S3 bucket. You want to verify this file was uploaded,
+    and has the right contents.</li>
+</ul>
+
+<p>(Another item on this list: writing a test to verify two
+microservices work together correctly. This kind of integration test
+has some fun surprises, so it has its own section below.)</p>
+
+<p>Unlike a unit test, this all depends on something outside of the
+immediate codebase being exercised. Because it tests the actual
+integration, such a test will catch bugs that unit tests never
+will. The downside is speed (such tests wills obviously run much
+slower, generally speaking), but also reliability (if your network
+connection hiccups, you can't run that S3 test). There is also the
+ops/sysadmin factor; an integration test may not run if the dev
+environment isn't set up with a test database, sandboxed AWS
+credentials, etc., while unit tests can generally be made to run from
+a fresh source control checkout and virtualenv.</p>
+
+<h3>"Internal" integration tests</h3>
+<p>Another form of integration test is more internal to your
+application - testing how several components or services within the
+application integrate. Let's pick a nice boring example: an employee
+expense-tracking system. 
+Your relevant classes are Employee
+and Expense:</p>
+
+
+<div style="display: block; padding-bottom: 0.35em;" class="highlight"><pre><ol><li><div class="line"><span class="k">class</span> <span class="nc">Expense</span><span class="p">:</span>
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">is_paid</span> <span class="o">=</span> <span class="bp">False</span>
+</div></li><li><div class="line">        
+</div></li><li><div class="line"><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">employee_id</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">employee_id</span>
+</div></li><li><div class="line">    <span class="c"># Etc.</span>
+</div></li></ol></pre></div>
+
+
+
+<p>Now say we have some services used in the application - one of
+which is an expense tracker service:</p>
+
+<div class="highlight"><pre><ol><li><div class="line"><span class="k">class</span> <span class="nc">_ExpenseTracker</span><span class="p">:</span>
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="c"># Maps employee IDs to a list of expenses</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">_expenses</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">addExpense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">employee</span><span class="p">:</span> <span class="n">Employee</span><span class="p">,</span> <span class="n">expense</span><span class="p">:</span> <span class="n">Expense</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="c"># Record an expense for this employee.</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line">    <span class="c"># And other methods...</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line"><span class="c"># There can be only one.</span>
+</div></li><li><div class="line"><span class="c"># (This is one good way to do singletons in Python, by the way.)</span>
+</div></li><li><div class="line"><span class="n">expensetracker</span> <span class="o">=</span> <span class="n">_ExpenseTracker</span><span class="p">()</span>
+</div></li></ol></pre></div>
+
+
+
+<p>And also a reimbursement service:</p>
+
+<div class="highlight"><pre><ol><li><div class="line"><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+</div></li><li><div class="line"><span class="k">class</span> <span class="nc">_Reimburser</span><span class="p">:</span>
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">_payout_history</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line">	<span class="k">def</span> <span class="nf">reimburseEmployee</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">employee</span><span class="p">:</span> <span class="n">Employee</span><span class="p">):</span>
+</div></li><li><div class="line">	    <span class="c"># Reimburse the employee.</span>
+</div></li><li><div class="line">	
+</div></li><li><div class="line">    <span class="c"># And other methods...</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line"><span class="n">reimburser</span> <span class="o">=</span> <span class="n">_Reimburser</span><span class="p">()</span>
+</div></li></ol></pre></div>
+
+
+
+<p>(I'm eliding some code for space, but this is <a href="https://github.com/migrateup/automated-tests-types/blob/master/expensetracking.py">fully
+implemented</a> if you'd like more detail.) Then an integration test
+might look like this:</p>
+
+
+<div class="highlight"><pre><ol><li><div class="line"><span class="kn">import</span> <span class="nn">unittest</span>
+</div></li><li><div class="line"><span class="kn">from</span> <span class="nn">expensetracking</span> <span class="kn">import</span> <span class="n">Expense</span><span class="p">,</span> <span class="n">Employee</span><span class="p">,</span> <span class="n">reimburser</span><span class="p">,</span> <span class="n">expensetracker</span>
+</div></li><li><div class="line"><span class="k">class</span> <span class="nc">TestPayouts</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+</div></li><li><div class="line">    <span class="k">def</span> <span class="nf">test_expenses_paid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</div></li><li><div class="line">        <span class="n">employee</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Aaron Maxwell'</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+</div></li><li><div class="line">        <span class="n">expensetracker</span><span class="o">.</span><span class="n">addExpense</span><span class="p">(</span><span class="n">employee</span><span class="p">,</span> <span class="n">Expense</span><span class="p">(</span><span class="s">'frisbee'</span><span class="p">,</span> <span class="mf">7.25</span><span class="p">))</span>
+</div></li><li><div class="line">        <span class="n">expensetracker</span><span class="o">.</span><span class="n">addExpense</span><span class="p">(</span><span class="n">employee</span><span class="p">,</span> <span class="n">Expense</span><span class="p">(</span><span class="s">'hockey stick'</span><span class="p">,</span> <span class="mf">49.95</span><span class="p">))</span>
+</div></li><li><div class="line">        <span class="n">expensetracker</span><span class="o">.</span><span class="n">addExpense</span><span class="p">(</span><span class="n">employee</span><span class="p">,</span> <span class="n">Expense</span><span class="p">(</span><span class="s">'cool sunglasses'</span><span class="p">,</span> <span class="mf">29.99</span><span class="p">))</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line">        <span class="c"># Total of all expenses so far is $87.19.</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mf">87.19</span><span class="p">,</span> <span class="n">expensetracker</span><span class="o">.</span><span class="n">totalUnpaidExpensesForEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">))</span>
+</div></li><li><div class="line">        <span class="c"># And I have not been reimbursed yet at all.</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">expensetracker</span><span class="o">.</span><span class="n">totalPaidExpensesForEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">))</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">reimburser</span><span class="o">.</span><span class="n">totalPaidForEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">))</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line">        <span class="c"># Now the reimburser service starts the reimbursement process.</span>
+</div></li><li><div class="line">        <span class="n">reimburser</span><span class="o">.</span><span class="n">reimburseEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">)</span>
+</div></li><li><div class="line">
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">expensetracker</span><span class="o">.</span><span class="n">totalUnpaidExpensesForEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">))</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mf">87.19</span><span class="p">,</span> <span class="n">expensetracker</span><span class="o">.</span><span class="n">totalPaidExpensesForEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">))</span>
+</div></li><li><div class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mf">87.19</span><span class="p">,</span> <span class="n">reimburser</span><span class="o">.</span><span class="n">totalPaidForEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">))</span>
+</div></li></ol></pre></div>
+
+
+
+<p>(This is an abridged version of the full test - <a href="https://github.com/migrateup/automated-tests-types/blob/master/test_int_expensetracking.py">use
+the source</a>.)</p>
+
+<h2>End-To-End Tests</h2>
+
+<p>An end-to-end test extends further than an integration test, to
+validate an entire flow in your application. Imagine you are
+implementing a business networking website. A typical flow for a new
+user may look like:</p>
+
+<ul>
+    <li>User creates and verifies a new account.</li>
+    <li>User imports a list of contacts, in the form of email
+    addresses.</li>
+    <li>Some of these are existing members of the network site (set up
+    in the test fixture), and accept the new user into their
+    network.</li>
+    <li>Some of the contacts are not existing members, triggering some
+    kind of invitation flow.</li>
+</ul>
+
+<p>An end-to-end test will exercise all these steps in sequence,
+making assertions and checks at many intermediate points. The idea is
+to exercise a <strong>full application flow of business
+value</strong>. It is especially helpful in a continuous deployment
+environment, where the engineering team can deploy many times per
+day. Excellent automated tests are critical to
+ensure code implementing one feature does not break a different
+one.</p>
+
+<p>End-to-end tests do not replace manual testing, but they automate
+significant parts of it.</p>
+
+<p>Some frameworks provide a kind of testing client or driver you
+can use to implement end-to-end tests. Django, for example, provides a
+test web-browser client in its django.test.TestCase class. If you are
+building on a framework that doesn't provide a suitable test client,
+or have implemented your own framework, creating your own is often a
+good return on your effort. That test client can then be used as a
+foundation for implementing a wide range of end-to-end tests over
+time.</p>
+
+<p>End-to-end tests generally do not test the UI. What we are focused
+on here are tests for Python code itself. Your application provides
+hooks to the UI layer (in the above example, it would be a set of HTTP
+endpoints); the end-to-end test exercises those hooks directly, rather
+than exercising the UI layer itself. That requires a different sort of
+test, covered by tools like Selenium.</p>
+
+<p>Actually, there is one situation where an end-to-end test can easily
+test the UI: when you are developing a command-line tool. Then your
+test can invoke that tool in a subshell, invoking a full command line,
+and measuring the results and output.</p>
+
+<h2>The Distinctions Are Fuzzy</h2>
+
+<p>In practice people have different ideas of where the line between a
+unit test and integration test is drawn, and think of what I'm calling
+end-to-end tests as just a variant of an integration test. I advise
+you to be flexible on this rather than dogmatic with your
+coworkers. It's not worth wasting one second arguing over
+semantics.</p>
+
+<p>That said, I have broken these down in the way I did because it
+tends to be a very useful delineation, <em>especially over the long term</em>
+as an application evolves and is developed over time. That last bit is
+important, because the early stages of development can mislead you
+here. The vocabulary isn't so important, but the ideas are.</p>
+
+<p>Something I have seen a lot is automated tests that are almost unit
+tests (as I define them), except they read from and write to a
+database like PostgreSQL, MySQL or MongoDB. This doesn't seem like a
+big deal at first, during the initial weeks or even months of a new
+code base's lifetime. The problem that eventually shows up has to do
+with how the different tests give different types of feedback.</p>
+
+<h2>The Real Value of Unit Tests</h2>
+
+<p>If your automated tests are segmented in terms of unit and
+integration tests, you probably have a build environment in which they
+can independently run. This will be different targets in Make or
+Pavement or whatever tool you use (even if there is also a target that
+runs all tests). <strong>The point of the restrictions on unit tests
+is so they run very fast.</strong> Ideally, all unit tests run in less
+than one minute total on your development machine. Even better if it
+is under a dozen seconds. This allows you to run them early and often
+as you develop, quickly discovering if your changes break some other
+part of the system. You can separately run the integration and
+end-to-end test suites - which may take several minutes to run, or
+longer - with less frequency.</p>
+
+<p>That threshold of one minute is important for you
+<em>cognitively</em>. That means it impacts your concentration, your
+focus, and your productivity as a developer. When you are holding
+thoughts in your mind, waiting 15 seconds is unlikely to cause you to
+lose your context; waiting two minutes probably will.
+</p>
+
+<p>Database calls are expensive in terms of wall-clock time. In the
+early stages of a project, what sometimes happens is that unit tests
+are written that trigger database operations. Because the application
+is young, the body of tests are small, and the full unit test suite
+completes very quickly. As you and your teammates add more code - more
+classes, more services, more components - the wall-clock time keeps
+creeping upward. Before long, you are waiting too many minutes for the
+complete unit test suite to run.</p>
+
+<p>What I just described for database calls all applies to test code
+calling out to some external API, or loading a resource over HTTP, and
+so on.  If you find yourself in the habit of starting your unit tests runs
+just before a coffee or bathroom break, you've lost your agility -
+regardless of the cause.</p>
+
+<p>And this is the reason for the strictures on unit tests above. By
+following them, even very substantial test suites can run
+quickly. Being explicit on the three types of test from the start can
+save your project a lot of trouble later. And for an existing code
+base (which you are statistically more likely to be working on right
+now), you can incrementally improve your test suite over time,
+starting with the next test you write.</p>
+
+<h2>Testing Microservices</h2>
+
+<p>If your application is split into microservices, you will need
+automated tests that check the coupling between two or more
+of them. This is a kind of integration test, and quickly becomes very
+important for the reliability of such systems.</p>
+
+<p>Depending on how modular and self-contained your different services
+can be - which depends on both the team's style of implementing, as
+well as the requirements of the problem domain - this probably won't
+scale indefinitely. The graph of different services can become too
+tightly and fully connected. You'll know this happens when you are
+trying to write a test that checks how services A and B interact, but
+to get them to bootstrap, you have to write mocks for services C, D,
+E, and maybe F, just so A and B can get to the testable point.</p>
+
+<p>If this happens, you have a couple of options. The first thing I
+would look at is whether it's practical to evolve the individual
+services to be more self-contained. Having to mock more than one or
+two services is a kind of code smell, that warns you the microservices
+may be more interleaved than they need to be.</p>
+
+<p>Still, in my experience, sometimes this is unavoidable; some key
+services just have to interoperate with many others, and that's
+sincerely the best way to implement the system. In that case, you will
+need to rely on end-to-end tests more.</p>
+
+<p>In fact, even if you do not have this problem, I strongly recommend
+implementing at least one comprehensive end-to-end test for any
+microservices-based application, and to create it early on. The subtle
+couplings between N different services quickly transcend a level that
+can be easily and fully understood by the human mind. An end-to-end
+test will always catch bugs that simpler integration tests will not;
+this is <em>exponentially</em> true for microservices.
+</p>
+
+<h2>Other Dimensions</h2>
+
+<p>This article describes one useful dimension for classifying
+automated tests for Python code. There are other classifications as
+well, such as functional tests, system tests, user acceptance tests,
+white-box and black-box tests, and many more. These are mostly
+orthogonal.</p>
+
+<p>There many more potential advanced Python testing topics -
+tests for nondeterministic code, testing multithreaded code, test
+design patterns, and more. <a href="mailto:aaron@migrateup.com">Ping
+me</a> if you'd like to see one in particular, or have a comment on
+this essay.</p>
+
+
+
+	</div> <!-- id="content-container" -->
+
+    <footer>
+	<p>Copyright 2014 - 2016 <a href="http://redsymbol.net/">Aaron Maxwell</a>. All rights
+	reserved.</p>
+	
+    </footer>
+    </div> <!-- id="main-container" -->
+  
+
+</body></html>

@@ -1,30 +1,35 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Aug 17 06:08:38 2016
-
-@author: Mayank Johri 
+@author: Mayank Johri
 """
 
+# Common code starts(1)
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import sessionmaker, relationship
+
 
 Base = declarative_base()
+# Common code ends (1)
 
-class User(Base):
-    __tablename__ = 'users'
+
+class School(Base):
+    __tablename__ = 'school'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    fullname = Column(String)
-    password = Column(String)
+    many = relationship("Students")
 
-    def __repr__(self):
-       return "<User(name='%s', fullname='%s', password='%s')>" % (
-                            self.name, self.fullname, self.password)
 
-import os
+class Students(Base):
+    __tablename__ = "students"
+    id = Column(Integer, primary_key=True)
+    school_id = Column(Integer, ForeignKey('school.id'))
 
-DB_FILE = "userinfo.sqlite3"
+
+DB_FILE = "one2many.sqlite3"
 if os.path.exists(DB_FILE):
     os.remove(DB_FILE)
 

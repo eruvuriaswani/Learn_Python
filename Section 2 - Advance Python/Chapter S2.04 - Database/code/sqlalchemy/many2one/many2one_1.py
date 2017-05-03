@@ -131,7 +131,7 @@ ISSUES
 The issues with this topology is since its unidirectional in nature,
 only through Students you can find their college name, but can not find
 students from collage.
-Also if we were to remove college then students will not be removed. 
+Also if we were to remove college then students will not be removed.
 -----------------------------------------------------------------------
 """
 print("*" * 20)

@@ -5,14 +5,14 @@ output:
   word_document: default
 ---
 # Chapter 1 - Introduction to Python
---- 
+---  
 
 [Python](http://www.python.org) is a very **High Level, object-oriented, dynamic<sup>1</sup>, strong typing<sup>2</sup>, interpreted** & **interactive** programming language.
 
 ```comments
-1. Dynamic Programming language: It at runtime executes many common programming tasks which static programming languages perform during compilation such as 
+1. Dynamic Programming language: It at runtime executes many common programming tasks which static programming languages perform during compilation such as  
     - Computation of code at runtime and late binding
-    - alteration of Objects at runtime 
+    - alteration of Objects at runtime  
     - Assembling of code at runtime based on the class of instances
 
 2. "strongly typed: Typing errors are prevented at runtime using the implicit type conversion, also it don't have static type checking, i.e. compiler don't check or enforce type constraint rules. The term **duck typing** is now used to describe the dynamic typing paradigm.
@@ -27,26 +27,26 @@ It is also an open source language (with license compatible with the *General Pu
 * It uses an elegant syntax, making the code easier to read
 * Easy-to-use language that makes it simple to get code working. This makes it ideal for prototype development and other ad-hoc programming tasks, without compromising maintainability
 * Default installation contains large standard library which supports most of the common programming tasks, such as connecting to web servers, searching text with regular expressions, reading and modifying files etc
-* Python's interactive mode, makes it easy to validate snippets of code. 
+* Python's interactive mode, makes it easy to validate snippets of code.  
 * Bundled development environment called IDLE.
 * Is easily extended by adding new modules implemented in a compiled language such as C or C++.
 * Can also be embedded into an application to provide a programmable interface.
 * Runs anywhere, including Mac OS X, Windows, Linux, and Unix.
-* Is free software in two senses. It doesn't cost anything to download or use Python, or to include it in your application. It can be freely modified and re-distributed, because while the language is copyrighted it's available under an open source license. 
+* Is free software in two senses. It doesn't cost anything to download or use Python, or to include it in your application. It can be freely modified and re-distributed, because while the language is copyrighted it's available under an open source license.  
 
 ## Some programming-language features of Python are:
 ----------------------
 
-* Many basic data types: 
+* Many basic data types:  
  - numbers (floating point, complex, and unlimited-length long integers)
- - strings (both ASCII and Unicode) 
+ - strings (both ASCII and Unicode)  
  - Collections (lists, dictionaries)
 * Python supports object-oriented programming with classes and multiple inheritance.
 * Code can be grouped into modules and packages.
 * The language supports raising and catching exceptions, resulting in cleaner error handling.
 * Data types are strongly and dynamically typed. Mixing incompatible types (e.g. attempting to add a string and a number) causes an exception to be raised, so errors are caught sooner.
 * Python contains advanced programming features such as generators and list comprehensions.
-* Python's automatic memory management frees you from having to manually allocate and free memory in your code. 
+* Python's automatic memory management frees you from having to manually allocate and free memory in your code.  
 
 It is possible to integrate Python with other languages such as C and Fortran. In general terms, it has many similarities with other dynamic languages such as Perl and Ruby.
 
@@ -75,7 +75,7 @@ Example of Python program:
 
 
 ```python
-# the character "#" indicate that rest of the line is a comment 
+# the character "#" indicate that rest of the line is a comment  
 # and will be ignored by the interpreter
 
 # A list of musical instruments
@@ -90,7 +90,7 @@ for instrument in instruments:
     Flute
     Harmonium
     Guitar
-    
+  
 
 In above example, `instruments` is a list containing the items "Drums", "Flute", "Harmonium" and "Guitar" and as the `for` loop is executed `instrument` corresponds to, an item from items on the list, one at a time.
 
@@ -160,10 +160,10 @@ Among Python IDEs, there are most popular ones:
 
 ![PyScripter](files/pyscripter.png)
 
-### Entire list 
+### Entire list  
 ----
 
-(from https://wiki.python.org/moin/IntegratedDevelopmentEnvironments?action=show&redirect=IDE) 
+(from https://wiki.python.org/moin/IntegratedDevelopmentEnvironments?action=show&redirect=IDE)  
 <table style="width: 100%"><tbody><tr><td style="vertical-align:top">
 
 **Name**
@@ -513,8 +513,8 @@ These editors support multiple programming languages​​, Python among them:
 
 Beyond the standard Python **Shell**, there are others available:
 
-+ PyCrust 
-+ IPython 
++ PyCrust  
++ IPython  
 + Reinteract
 + bpython
 + PyroShell
@@ -551,7 +551,7 @@ import this
 ```
 
     The Zen of Python, by Tim Peters
-    
+  
     Beautiful is better than ugly.
     Explicit is better than implicit.
     Simple is better than complex.
@@ -571,7 +571,7 @@ import this
     If the implementation is hard to explain, it's a bad idea.
     If the implementation is easy to explain, it may be a good idea.
     Namespaces are one honking great idea -- let's do more of those!
-    
+  
 
 ## The Zen of Python
 ----

@@ -1,8 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Aug 17 06:08:38 2016
+Created on 30 Apr 2017
 @author: Mayank Johri
-"""
+Description:
+
+In the below example we will be create a sample
+for Many to one relationship using sqlalchemy
+
+Tip:
+-----
+- Plase a foreign key in the parent table referencing the one.
+- `relationship` is declared on the many, where a new scalar-holding
+attribute will be created
+- `Bidirectional` behavior can be achieved by
+adding  relationship() in one and applying the
+relationship.back_populates parameter in both directions """
+
 
 # Common code starts(1)
 import os
@@ -16,113 +29,111 @@ Base = declarative_base()
 # Common code ends (1)
 
 
+class Students(Base):
+    __tablename__ = "students"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    school_id = Column(Integer, ForeignKey('school.id'))
+
+
 class School(Base):
     __tablename__ = 'school'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    many = relationship("Students")
+    school = relationship("Students")
 
 
-class Students(Base):
-    __tablename__ = "students"
-    id = Column(Integer, primary_key=True)
-    school_id = Column(Integer, ForeignKey('school.id'))
+DB_FILE = "one2many_basic.sqlite3"
 
-
-DB_FILE = "one2many.sqlite3"
-if os.path.exists(DB_FILE):
+try:
     os.remove(DB_FILE)
-
+except Exception as e:
+    print(e)
 engine = create_engine('sqlite:///' + DB_FILE, echo=True)
 Base.metadata.create_all(engine)
 
-
-from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
+dms = School()
+dms.name = "Demonstration Multipurpose Higher Secondary School"
+session.add(dms)
+session.add(School(name="CDAC"))
+# session.flush()
 
-ed_user = User(name='ed', fullname='Ed Jones', password='edspassword')
-session.add(ed_user)
-session.add(User(name='ed', fullname='Ed Jones 1', password='edspassword 1'))
-session.add(User(name='ed 2', fullname='Ed Jones 2', password='edspassword 2'))
-session.add(User(name='test', fullname='Test User', password='TestUserspassword'))
+# session.commit()
+mayank = Students(name="Mayank Johri")
+mayank.school = dms
+session.add(mayank)
+session.add(Students(name="Anuja Johri", school=dms))
+session.flush()
+
+session.commit()
+
+students = [
+    "Sachin Shah",
+    "Satendra",
+    "Rajeev Chaturvedi"]
+
+session.add_all([Students(name=student, school=dms) for student in students])
 session.flush()
 session.commit()
 
-our_user = session.query(User).filter_by(name='ed').first()
+# --------------------------------------------------
+cdac_students = [
+    "Manish Gupta",
+    "Viral Kamdar",
+    "Pinakin Purohit",
+    "Nitin Srivastava"]
 
-# for user in our_user:
-#     print(user.fullname, user.name)
+cdac = session.query(School).filter_by(name="CDAC").first()
 
+session.add_all([Students(name=student, school=cdac)
+                 for student in cdac_students])
+session.flush()
+session.commit()
+# # --------------------------------------------------
 
-print("---------------")
-print(ed_user is our_user)
-print("---------------")
+mayank.name = "mayank Johri"
 
-session.add_all([
-    User(name='wendy', fullname='Wendy Williams', password='foobar'),
-    User(name='mary', fullname='Mary Contrary', password='xxg527'),
-    User(name='fred', fullname='Fred Flinstone', password='blah')])
-
-# Changing the Password for ed
-
-ed_user.password = 'f8s7ccs'
-
-
-"""
-session.dirty -
-"""
+# """
+# session.dirty -
+# """
 print(session.dirty)
-
-# """
-# session.new -
-# """
-# print(session.new)
-#
 session.commit()
 print(session.dirty)
-#
-# """
-# session.new -
-# """
-# print(session.new)
-#
-#
-# """
-# Querying
-# --------------------------------
-# A Query object is created using the query() method on Session. This function
-# takes a variable number of arguments, which can be any combination of classes
-# and class-instrumented descriptors. Below, we indicate a Query which loads
-# User instances. When evaluated in an iterative context, the list of User
-# objects present is returned:
-# """
-#
-#
-# for instance in session.query(User).order_by(User.id):
-#     print(instance.name, instance.fullname)
-#
-#
-for name, fullname in session.query(User.name, User.fullname):
-    print(name, " is ", fullname)
 
+"""
+Querying
+-----------------------------------------------------------------------
+A Query object is created using the query() method on Session.
+It takes a number of arguments, which can be any combination of classes
+and class-instrumented descriptors.
+Below, we indicate a Query which loads Students instances.
+When evaluated in an iterative context, the list of students
+objects present is returned.
+-----------------------------------------------------------------------
+"""
+print("*" * 20)
+for student in session.query(Students).order_by(Students.id):
+    print("{user} studied in {school}".format(user=student.name,
+                                              school=student.school.name))
+print("*" * 20)
+for result in session.query(Students.name).order_by(Students.id):
+    print("{user} was a student.".format(user=result.name))
 
-for user in session.query(User).filter(User.name.in_(['ed', 'wendy', 'jack'])):
-    print(user.fullname)
+print("*" * 20)
+for result in session.query(Students.name).order_by(Students.id):
+    print("{user} was a student.".format(user=result.name))
 
-#
-# """
-# The tuples returned by Query are named tuples, supplied by the KeyedTuple
-# class, and can be treated much like an ordinary Python object. The names are
-# the same as the attribute’s name for an attribute,
-# and the class name for a class:
-# """
-# for row in session.query(User, User.name).all():
-#      print(row.User, row.name)
-#
-# for row in session.query(User.name.label('name_label')).all():
-#     print(row.name_label)
-#
-# for name, in session.query(User.name).filter_by(fullname='Ed Jones'):
-#     print(name)
-#
+"""
+ISSUES
+-----------------------------------------------------------------------
+The issues with this topology is since its unidirectional in nature,
+only through Students you can find their college name, but can not find
+students from collage.
+Also if we were to remove college then students will not be removed.
+-----------------------------------------------------------------------
+"""
+print("*" * 20)
+session.close()
+engine.dispose()

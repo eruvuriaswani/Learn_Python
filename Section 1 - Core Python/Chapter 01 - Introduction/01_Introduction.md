@@ -4,44 +4,40 @@ __________
 
 [Python](http://www.python.org) is a very **High Level, object-oriented, dynamic<sup>1</sup>, strong typing<sup>2</sup>, interpreted** & **interactive** programming language.
 
-```comments
-1. Dynamic Programming language: It at runtime executes many common programming tasks which static programming languages perform during compilation such as 
+>1. Dynamic Programming language: It at runtime executes many common programming tasks which static programming languages perform during compilation such as
     - Computation of code at runtime and late binding
-    - alteration of Objects at runtime 
+    - alteration of Objects at runtime
     - Assembling of code at runtime based on the class of instances
-
-2. "strongly typed: Typing errors are prevented at runtime using the implicit type conversion, also it don't have static type checking, i.e. compiler don't check or enforce type constraint rules. The term **duck typing** is now used to describe the dynamic typing paradigm.
+2. Strongly Typed: Typing errors are prevented at runtime using the implicit type conversion, also it don't have static type checking, i.e. compiler don't check or enforce type constraint rules. The term **duck typing** is now used to describe the dynamic typing paradigm.
 Duck typing is an application of the duck test in type safety. It requires that type checking be done at runtime only, and is implemented by use of dynamic typing or by reflection.
-```
+
 
 It is also an open source language (with license compatible with the *General Public License (GPL)*, but less restrictive, allowing Python to be even incorporated into proprietary products). Its specification is maintained by the [Python Software Foundation](http://www.python.org/psf/) (PSF).
 
 ## Key Features
----
 
 * It uses an elegant syntax, making the code easier to read
 * Easy-to-use language that makes it simple to get code working. This makes it ideal for prototype development and other ad-hoc programming tasks, without compromising maintainability
 * Default installation contains large standard library which supports most of the common programming tasks, such as connecting to web servers, searching text with regular expressions, reading and modifying files etc
-* Python's interactive mode, makes it easy to validate snippets of code. 
+* Python's interactive mode, makes it easy to validate snippets of code.
 * Bundled development environment called IDLE.
 * Is easily extended by adding new modules implemented in a compiled language such as C or C++.
 * Can also be embedded into an application to provide a programmable interface.
 * Runs anywhere, including Mac OS X, Windows, Linux, and Unix.
-* Is free software in two senses. It doesn't cost anything to download or use Python, or to include it in your application. It can be freely modified and re-distributed, because while the language is copyrighted it's available under an open source license. 
+* Is free software in two senses. It doesn't cost anything to download or use Python, or to include it in your application. It can be freely modified and re-distributed, because while the language is copyrighted it's available under an open source license.
 
 ## Some programming-language features of Python are:
-----------------------
 
-* Many basic data types: 
+* Many basic data types:
  - numbers (floating point, complex, and unlimited-length long integers)
- - strings (both ASCII and Unicode) 
+ - strings (both ASCII and Unicode)
  - Collections (lists, dictionaries)
 * Python supports object-oriented programming with classes and multiple inheritance.
 * Code can be grouped into modules and packages.
 * The language supports raising and catching exceptions, resulting in cleaner error handling.
 * Data types are strongly and dynamically typed. Mixing incompatible types (e.g. attempting to add a string and a number) causes an exception to be raised, so errors are caught sooner.
 * Python contains advanced programming features such as generators and list comprehensions.
-* Python's automatic memory management frees you from having to manually allocate and free memory in your code. 
+* Python's automatic memory management frees you from having to manually allocate and free memory in your code.
 
 It is possible to integrate Python with other languages such as C and Fortran. In general terms, it has many similarities with other dynamic languages such as Perl and Ruby.
 
@@ -49,10 +45,11 @@ It is possible to integrate Python with other languages such as C and Fortran. I
 ---------
 
 The language was created in 1990 by **Guido van Rossum**, at National Research Institute for Mathematics and Computer Science in the Netherlands (CWI) and had originally focused on users as physicists and engineers. Python was designed from another existing language at the time, called ABC.
-![Guido van Rossum](files/GuidoVanRossum.png)
+
+![Guido van Rossum](file://D:/code/LetsExplorePython/MarkDown/GuidoVanRossum.png)
+
 
 ## Versions
--------
 
 The official implementation of Python is maintained by the PSF and written in C, and therefore is also known as CPython. The latest stable version is available for download at:
 
@@ -69,7 +66,7 @@ Example of Python program:
 
 
 ```python
-# the character "#" indicate that rest of the line is a comment 
+# the character "#" indicate that rest of the line is a comment
 # and will be ignored by the interpreter
 
 # A list of musical instruments
@@ -84,12 +81,11 @@ for instrument in instruments:
     Flute
     Harmonium
     Guitar
-    
+
 
 In above example, `instruments` is a list containing the items "Drums", "Flute", "Harmonium" and "Guitar" and as the `for` loop is executed `instrument` corresponds to, an item from items on the list, one at a time.
 
 ### Executing the code
--------
 
 The source files are usually identified by the extension ".py" and can be run directly by the interpreter:
 
@@ -100,24 +96,24 @@ python apl.py
 Thus `apl.py` will run. On Windows, the file extensions ".py", ". pyw", ". pyc" and ". pyo" are associated with Python automatically during installation, so just click a the file to run it. The ". pyw" files run with an alternate version of the interpreter that does not open the console window.
 
 ## Dynamic Typing
-----------------
+
+
 Python uses dynamic typing, which means that the type of a variable is inferred by the interpreter at runtime (this is known as *Duck Typing*). By the time a variable is created by attribution the interpreter defines the type of a variable, along with the operations that can be applied.
 
 Typing of Python is strong, ie, the interpreter checks whether the transactions are valid and does automatic coercions between incompatible types. In Python, coercions are performed automatically only between types that are clearly related, as integer and long integer. To perform the operation between non-compatible types, you must explicitly convert the type of the variable or variables before the operation.
 
 ## Compilation and interpretation
---------------------------
+
 The source code is translated by Python to bytecode, which is a binary format with instructions for the interpreter. The bytecode is cross platform and can be distributed and run without the original source.
 
-! [Compilation, interpretation and packing] (files/bpyfd_diags1.png)
-<img src="files/bpyfd_diags1.png" alt="Compilation, interpretation and packing" width=500>
+![Compilation, interpretation and packing](files/bpyfd_diags1.png)
 
 By default, the parser compiles the code and stores the bytecode on disk, so the next time you run it, there is no need to recompile the program, reducing the load time of execution. If the source files are changed, the interpreter will be responsible for regenerating the bytecode automatically, even using the *interactive shell*. When a program or a module is invoked, the interpreter performs the analysis of the code, converts to symbols, compiles (if there is no updated bytecode on disk) and runs it in the Python virtual machine.
 
 The bytecode is stored in files with the extension ". pyc" (normal bytecode) or ". pyo" (optimized bytecode). The bytecode can also be packaged along with an executable interpreter, to facilitate the distribution of the application, eliminating the need to install Python on each computer.
 
 ## Interactive Mode
-----------------
+
 The Python interpreter can be used interactively, where lines of code are typed into a *prompt* (command line) *shell* similar to the operating system.
 
 `python`
@@ -134,10 +130,10 @@ On Windows, the interactive mode is also available via the icon "Python (command
 The interactive mode is a distinguishing feature of the language, as it is possible to test and modify code snippets before inclusion in programs, to extract and convert data or even analyze the state of the objects in memory, among other possibilities.
 
 Besides the traditional interactive mode of Python, there are other programs that act as alternatives to more sophisticated interfaces (such as <span class="note" title="PyCrust is part of wxPython project (http://www.wxpython.org/">PyCrust</span>):
+
 ![PyCrust](files/pycrust.png)
 
 ## Common IDE & Tools
------------
 
 There are many development tools for Python, such as IDEs, editors and shells (that take advantage of the interactive capabilities of Python).
 
@@ -152,12 +148,13 @@ Among Python IDEs, there are most popular ones:
 + [vim](http://vim.org)
 + [Sublime Text](http://www.sublimetext.com/)
 
-![PyScripter](files/pyscripter.png)
+<img src="files/pyscripter.png" alt="files/pyscripter.png">
+![PyScripter] (files/pyscripter.png)
 
-### Entire list 
+### Entire list
 ----
 
-(from https://wiki.python.org/moin/IntegratedDevelopmentEnvironments?action=show&redirect=IDE) 
+(from https://wiki.python.org/moin/IntegratedDevelopmentEnvironments?action=show&redirect=IDE)
 <table style="width: 100%"><tbody><tr><td style="vertical-align:top">
 
 **Name**
@@ -507,8 +504,8 @@ These editors support multiple programming languages​​, Python among them:
 
 Beyond the standard Python **Shell**, there are others available:
 
-+ PyCrust 
-+ IPython 
++ PyCrust
++ IPython
 + Reinteract
 + bpython
 + PyroShell
@@ -532,8 +529,9 @@ Some of the most known *frameworks* availble are:
 + 3D: Visual Python, PyOpenGL and Python Ogre.
 + Object-relational mapping: SQLAlchemy e SQLObject.
 
+
+
 ## Culture
--------
 
 The name Python was taken by Guido van Rossum from british TV program *Monty Python's Flying Circus*, and there are many references to the show in its documentation. For instance, Python's oficial package repository was called Cheese Shop, the name of one of the frames of the program. Currently, the repository name is [Python Package Index](http://pypi.python.org/pypi) (PYPI).
 
@@ -545,7 +543,7 @@ import this
 ```
 
     The Zen of Python, by Tim Peters
-    
+
     Beautiful is better than ugly.
     Explicit is better than implicit.
     Simple is better than complex.
@@ -565,7 +563,7 @@ import this
     If the implementation is hard to explain, it's a bad idea.
     If the implementation is easy to explain, it may be a good idea.
     Namespaces are one honking great idea -- let's do more of those!
-    
+
 
 ## The Zen of Python
 ----

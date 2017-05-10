@@ -43,7 +43,7 @@ class School(Base):
     name = Column(String)
 
 
-DB_FILE = "many2one.sqlite3"
+DB_FILE = "many2one_1.sqlite3"
 
 try:
     os.remove(DB_FILE)
@@ -121,9 +121,6 @@ print("*" * 20)
 for result in session.query(Students.name).order_by(Students.id):
     print("{user} was a student.".format(user=result.name))
 
-print("*" * 20)
-for result in session.query(Students.name).order_by(Students.id):
-    print("{user} was a student.".format(user=result.name))
 
 """
 ISSUES

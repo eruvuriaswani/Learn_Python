@@ -44,6 +44,7 @@ if __name__ == "__main__":
     t1 = Teacher(name="SharmaSir")
     t1.lessons = [
         Lesson(name="Inorganic"),
+        Lesson(name="Multiplication"),
         Lesson(name="Organic")
     ]
     s.add(t1)

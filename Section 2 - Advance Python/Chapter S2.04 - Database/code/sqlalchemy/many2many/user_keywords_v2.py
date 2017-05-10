@@ -51,10 +51,12 @@ if __name__ == "__main__":
     print(users['mayank'].kw)
     print(users['mayank'].kw[0].keyword)
     print([keyword.keyword for keyword in users['mayank'].kw])
-    users['Aalok'] =  User('Aalok')
+    users['Aalok'] = User('Aalok')
     users['Aalok'].kw.append(msi)
-    
+
     s.add_all(users.values())
     s.commit()
     print("---------------")
-    print([keyword.keyword for tester in users.values() for keyword in tester.kw ])
+    print([keyword.keyword
+           for tester in users.values()
+           for keyword in tester.kw])

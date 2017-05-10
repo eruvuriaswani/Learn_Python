@@ -33,14 +33,14 @@ class Students(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     school_id = Column(Integer, ForeignKey('school.id'))
-    school = relationship("School", back_populates="students")
+#    school = relationship("School", back_populates="students")
 
 
 class School(Base):
     __tablename__ = 'school'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    students = relationship("Students", back_populates="school",
+    students = relationship("Students", backref="school",
                             cascade="all, delete, delete-orphan")
 
 

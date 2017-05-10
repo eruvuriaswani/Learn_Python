@@ -40,7 +40,7 @@ class School(Base):
     __tablename__ = 'school'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    school = relationship("Students")
+    student = relationship("Students")
 
 
 DB_FILE = "one2many_basic.sqlite3"
@@ -49,6 +49,7 @@ try:
     os.remove(DB_FILE)
 except Exception as e:
     print(e)
+    
 engine = create_engine('sqlite:///' + DB_FILE, echo=True)
 Base.metadata.create_all(engine)
 
@@ -62,9 +63,10 @@ session.add(School(name="CDAC"))
 
 # session.commit()
 mayank = Students(name="Mayank Johri")
-mayank.school = dms
+dms.student.append(mayank)
+dms.student.append(Students(name="Anuja Johri"))
 session.add(mayank)
-session.add(Students(name="Anuja Johri", school=dms))
+session.add(dms)
 session.flush()
 
 session.commit()
@@ -74,66 +76,72 @@ students = [
     "Satendra",
     "Rajeev Chaturvedi"]
 
-session.add_all([Students(name=student, school=dms) for student in students])
+for student in students:
+    dms.student.append(Students(name=student))
+#dms.student.append([Students(name=student, school=dms) for student in students])
+session.add(dms)
 session.flush()
 session.commit()
-
-# --------------------------------------------------
-cdac_students = [
-    "Manish Gupta",
-    "Viral Kamdar",
-    "Pinakin Purohit",
-    "Nitin Srivastava"]
-
-cdac = session.query(School).filter_by(name="CDAC").first()
-
-session.add_all([Students(name=student, school=cdac)
-                 for student in cdac_students])
-session.flush()
-session.commit()
-# # --------------------------------------------------
+#
+## --------------------------------------------------
+#cdac_students = [
+#    "Manish Gupta",
+#    "Viral Kamdar",
+#    "Pinakin Purohit",
+#    "Nitin Srivastava"]
+#
+## select * from school where name='CDAC' excluding first
+#cdac = session.query(School).filter_by(name="CDAC").first()
+#
+#session.add_all([Students(name=student, school=cdac)
+#                 for student in cdac_students])
+#session.flush()
+#session.commit()
+## # --------------------------------------------------
+print("^"*30)
+print(session.dirty)
 
 mayank.name = "mayank Johri"
 
 # """
 # session.dirty -
 # """
+### HOW TO USE
 print(session.dirty)
 session.commit()
 print(session.dirty)
-
-"""
-Querying
------------------------------------------------------------------------
-A Query object is created using the query() method on Session.
-It takes a number of arguments, which can be any combination of classes
-and class-instrumented descriptors.
-Below, we indicate a Query which loads Students instances.
-When evaluated in an iterative context, the list of students
-objects present is returned.
------------------------------------------------------------------------
-"""
+#print(help(session.dirty))
+#"""
+#Querying
+#-----------------------------------------------------------------------
+#A Query object is created using the query() method on Session.
+#It takes a number of arguments, which can be any combination of classes
+#and class-instrumented descriptors.
+#Below, we indicate a Query which loads Students instances.
+#When evaluated in an iterative context, the list of students
+#objects present is returned.
+#-----------------------------------------------------------------------
+#"""
 print("*" * 20)
 for student in session.query(Students).order_by(Students.id):
-    print("{user} studied in {school}".format(user=student.name,
-                                              school=student.school.name))
-print("*" * 20)
-for result in session.query(Students.name).order_by(Students.id):
-    print("{user} was a student.".format(user=result.name))
-
-print("*" * 20)
-for result in session.query(Students.name).order_by(Students.id):
-    print("{user} was a student.".format(user=result.name))
-
-"""
-ISSUES
------------------------------------------------------------------------
-The issues with this topology is since its unidirectional in nature,
-only through Students you can find their college name, but can not find
-students from collage.
-Also if we were to remove college then students will not be removed.
------------------------------------------------------------------------
-"""
-print("*" * 20)
+    print("{user} studied in {school}".format(user=student.name, school=student.school_id))
+#print("*" * 20)
+#for result in session.query(Students.name).order_by(Students.id):
+#    print("{user} was a student.".format(user=result.name))
+#
+#print("*" * 20)
+#for result in session.query(Students.name).order_by(Students.id):
+#    print("{user} was a student.".format(user=result.name))
+#
+#"""
+#ISSUES
+#-----------------------------------------------------------------------
+#The issues with this topology is since its unidirectional in nature,
+#only through Students you can find their college name, but can not find
+#students from collage.
+#Also if we were to remove college then students will not be removed.
+#-----------------------------------------------------------------------
+#"""
+#print("*" * 20)
 session.close()
 engine.dispose()

@@ -1,9 +1,3 @@
----
-output:
-  html_document: default
-  pdf_document: default
-  word_document: default
----
 # Chapter 1 - Introduction to Python
 ---  
 

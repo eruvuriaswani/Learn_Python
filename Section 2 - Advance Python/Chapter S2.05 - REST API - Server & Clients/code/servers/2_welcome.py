@@ -1,9 +1,10 @@
 from flask import Flask, url_for
+
 app = Flask(__name__)
 
 @app.route('/')
 def api_root():
-    return 'Welcome to Flask Classes'
+    return '{"text" : "Welcome to the Rest Server"}'
 
 @app.route('/test/articles')
 def api_articles():
@@ -14,4 +15,4 @@ def api_article(articleid):
     return 'You are reading ' + articleid
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -1,16 +1,18 @@
 from flask import Flask, url_for
-import request
+import requests
 import json
 
 from database.database import db_session
 from models import City
 
+
+app = Flask(__name__)
+
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
-        
 
-app = Flask(__name__)
 
 @app.route('/')
 def api_root():
@@ -22,6 +24,7 @@ def api_articles():
 
 @app.route('/articles/<articleid>')
 def api_article(articleid):
+	
     return 'You are reading ' + articleid
 
 

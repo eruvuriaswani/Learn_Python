@@ -6,8 +6,6 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 binary = FirefoxBinary(r'C:\apps\Mozilla Firefox\firefox.exe')
 driver = webdriver.Firefox(firefox_binary=binary)
-driver.get('https://google.com')
-
 
 driver.get("http://www.python.org")
 assert "Python" in driver.title

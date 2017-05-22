@@ -5,6 +5,10 @@ from flask_wtf import Form
 # from .models import Project
 
 
+class UploadScenarios(Form):
+    projects = SelectField('Project Name', [validators.DataRequired()],
+                           coerce=int)
+
 class ContactForm(Form):
     name = TextField("Name", [validators.Required("Please enter your name.")])
     email = TextField("Email",

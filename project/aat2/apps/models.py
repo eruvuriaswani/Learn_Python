@@ -4,7 +4,6 @@ from flask_login import UserMixin
 # from sqlalchemy.orm import sessionmaker, db.relationship, db.backref
 
 
-###################
 user_proj = db.Table(
     "user_proj",
     db.metadata,
@@ -51,6 +50,14 @@ class Project(db.Model):
     def __init__(self, name, desc=""):
         self.name = name
         self.desc = desc
+
+
+class TestCases(db.Model):
+    __tablename__ = "testcases"
+    id = db.Column(db.Integer, primary_key=True)
+
+
+########################
 
 
 class Headers(db.Model):

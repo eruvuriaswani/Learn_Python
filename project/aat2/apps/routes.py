@@ -17,11 +17,10 @@ def login():
                            form=signin_form)
 
 
-@app.route('/trans')
-def trans_login():
-    signin_form = SigninForm()
-    return render_template('gentella/login_transparent.html',
-                           form=signin_form)
+@app.route("/get_tcs", methods=['POST'])
+@login_required
+def get_tcs():
+    pass
 
 
 @app.route('/')
@@ -33,8 +32,12 @@ def home():
 @app.route('/run')
 @login_required
 def run():
+    print("Session: ", session['user_id'])
+    projs = User.query.filter_by(id=session['user_id']).all()[0].projects
+    project_dict = dict([(p.id, p.name) for p in projs])
+    print(project_dict)
     return render_template('gentella/run.html',
-                           projects=["EMP", "ESOP"],
+                           projects=project_dict,
                            username="johri_m@hcl.com",
                            testcases=[{"name": "Check the Register"},
                                       {"name": "New Test for Register"}])
@@ -79,7 +82,6 @@ def contact():
                           form.email.data,
                           form.message.data)
         mail.send(msg)
-
         return render_template('gentella/contact.html', success=True)
     return render_template('gentella/contact.html', form=form)
 
@@ -174,12 +176,8 @@ def signin():
             if user.check_password(form.password.data):
                 login_user(user)
                 session['email'] = form.email.data
-                return render_template('gentella/dashboard.html', user=user)
-        # session['email'] = form.email.data
-        # return redirect(url_for('profile'))
-
-    # elif request.method == 'GET':
-    #     return render_template('gentella/dashboard.html', form=form)
+                return redirect(url_for('home'))
+                # render_template('gentella/dashboard.html', user=user)
 
 
 @app.route('/signout')

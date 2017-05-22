@@ -8,8 +8,6 @@
 <!-- Datatables -->
 <link href="{{ url_for( 'static', filename='gentella/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet"> {% endblock %} {% block content %}
 
-
-
 <!-- top tiles -->
 <div class="row tile_count">
     <div>
@@ -17,13 +15,10 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-3">Select Project</label>
             <div class="col-md-7 col-sm-7 col-xs-7">
                 <select class="form-control">
-                    {% for key, value in projects.items() %}
-                    <option id="{{ key }}">{{ value }}</option>
+                    {% for proj in projects%}
+                    <option>{{ proj }}</option>
                      {% endfor %}
                 </select>
-            </div>
-            <div class="col-md-2 col-sm-3 col-xs-2">
-                <button id="populate_tcs" class="btn btn-primary">Populate Test Cases</button>
             </div>
         </div>
         <div class="btn-group">

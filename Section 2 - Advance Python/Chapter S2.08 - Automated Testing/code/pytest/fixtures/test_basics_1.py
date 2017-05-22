@@ -8,7 +8,6 @@ def test_foo(foo):
     assert foo == 42
 
 class TestBar:
-
     @pytest.fixture
     def bar(self, request):
         def fin():

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}User Sign In{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ static('css/login.css') }}">
+{% endblock %}
+
+{% block body_header %}{% endblock %}
+
+{% block body_main %}
+<div class="logo">
+    <img src="{{ static('img/freescale-logo.png') }}">
+</div>
+<div class="container">
+    <div class="row hide" id="browser_tip">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                We have detected that you are using old version IE browser(less than IE10), in order to have a better surfing experience,<br>
+                please
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/ie-10-worldwide-languages" class="alert-link" target="_blank">upgrade</a>
+                your browser, or use
+                <a href="http://www.mozilla.org/en-US/firefox/new/" class="alert-link" target="_blank">Firefox</a>,
+                <a href="https://www.google.com/intl/en/chrome/browser/" class="alert-link" target="_blank">Chrome</a>,
+                <a href="http://support.apple.com/downloads/#safari" class="alert-link" target="_blank">Safari</a>
+                to visit this site
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="window-signin">
+            <div id="title-signin">
+                <i class="fa fa-sign-in pull-left"></i> Sign in to continue to use.
+            </div>
+            <form id="form-signin" method="POST" action="{{ url_for('auth.login') }}">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                        <input type="text" class="form-control" placeholder="Core ID" name="core_id" required autofocus>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                        <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <div>
+                    <label class="checkbox pull-left">
+                        <input type="checkbox" name="remember_me"> Remember me
+                    </label>
+                </div>
+                <div class="clearfix"></div>
+                <div id="project_version">
+                    <a href="{{ url_for('main.releasenotes') }}#{{ config.VERSION }}" class="pull-right">v{{ config.VERSION }}</a>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+    <div class="row hidden-xs">
+        <div class="col-md-8 col-md-offset-2 note">
+            <div class="alert alert-success text-left">
+                <strong>Notes: </strong>
+                <p>
+                    We will store your coreid and password to your browser cookie,
+                    and only use it when you want to run some testcase.
+                </p>
+                <p>
+                    You can clear them easily by below ways:<br>
+                    1. click "Sign Out"<br>
+                    2. clear your browser cookie
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(function() {
+        if (oldIE) {
+            $("#browser_tip").removeClass("hide");
+        }
+    });
+</script>
+{% endblock %}

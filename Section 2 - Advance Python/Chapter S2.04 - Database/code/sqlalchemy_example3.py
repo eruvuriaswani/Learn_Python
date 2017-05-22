@@ -36,7 +36,6 @@ class Comments(Base):
     user_id = Column(Integer)
 
 
-
 if __name__ == "__main__":
     engine = create_engine('sqlite:///userlist.sqlite3', echo=False)
     Base.metadata.create_all(engine)

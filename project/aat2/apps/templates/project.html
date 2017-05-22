@@ -1,0 +1,139 @@
+<html>
+<head>
+<style> 
+table,th,td {
+ border:2px solid black;
+ }
+ table { 
+border-collapse:collapse; 
+//width:10%; 
+}
+ td {
+ height:40px;
+ }
+ tr {
+ background-color:lightgrey; 
+color:black; 
+}
+ th { 
+background-color:yellow; 
+color:black; 
+} 
+#footer {
+   	position:absolute;
+   	bottom:0;
+   	width:100%;
+   	height:70px;   /* Height of the footer */
+   	background:#8d9db6;
+	}
+</style> 
+
+<script type="text/javascript">
+function edit_row(no)
+{
+ document.getElementById("edit_button"+no).style.display="none";
+ document.getElementById("save_button"+no).style.display="block";
+	
+ var key=document.getElementById("key_row"+no);
+ var value=document.getElementById("value_row"+no);
+ var type=document.getElementById("type_row"+no);
+	
+ var key_data=key.innerHTML;
+ var value_data=value.innerHTML;
+ var type_data=type.innerHTML;
+	
+ key.innerHTML="<input type='text' id='key_text"+no+"' value='"+key_data+"'>";
+ value.innerHTML="<input type='text' id='value_text"+no+"' value='"+value_data+"'>";
+ type.innerHTML="<input type='text' id='type_text"+no+"' value='"+type_data+"'>";
+}
+
+function save_row(no)
+{
+ var key_val=document.getElementById("key_text"+no).value;
+ var value_val=document.getElementById("value_text"+no).value;
+ var type_val=document.getElementById("type_text"+no).value;
+
+ document.getElementById("key_row"+no).innerHTML=key_val;
+ document.getElementById("value_row"+no).innerHTML=value_val;
+ document.getElementById("type_row"+no).innerHTML=type_val;
+
+ document.getElementById("edit_button"+no).style.display="block";
+ document.getElementById("save_button"+no).style.display="none";
+}
+
+function delete_row(no)
+{
+ document.getElementById("row"+no+"").outerHTML="";
+}
+
+function add_row()
+{
+ var new_key=document.getElementById("new_key").value;
+ var new_value=document.getElementById("new_value").value;
+ var new_type=document.getElementById("new_type").value;
+	
+ var table=document.getElementById("data_table");
+ var table_len=(table.rows.length)-1;
+ var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='key_row"+table_len+"'>"+new_key+"</td><td id='value_row"+table_len+"'>"+new_value+"</td><td id='type_row"+table_len+"'>"+new_type+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
+
+ document.getElementById("new_key").value="";
+ document.getElementById("new_value").value="";
+ document.getElementById("new_type").value="";
+}
+</script>
+</head>
+<body bgcolor=#8d9db6>
+
+<div id="wrapper">
+<div id="container">
+<div id="header">
+	<center>
+	<font color="white"><h1>Framework for Functional testing</h1></font>
+	</center><hr/>
+      </div>
+<div id="body">
+<table align='center' cellspacing=0 cellpadding=0 id="data_table" border=1>
+<tr>
+<th>key</th>
+<th>value</th>
+<th>type</th>
+</tr>
+
+<tr id="row1">
+<td id="key_row1">$producer</td>
+<td id="value_row1">johri_m@hcl.com</td>
+<td id="type_row1">string</td>
+<td>
+
+<input type="button" id="edit_button1" value="Update" class="edit" onclick="edit_row('1')">
+
+<input type="button" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+<input type="button" value="Delete" class="delete" onclick="delete_row('1')">
+</td>
+</tr>
+
+<form action = "project" method = "POST">
+<tr>
+<td><input type="text" id="new_key" name="key"></td>
+<td><input type="text" id="new_value" name="value"></td>
+<td><input type="text" id="new_type" name="type"></td>
+<td><input type="submit" value="submit">
+<input type="button" class="add" onclick="add_row();" value="Add Row"></td>
+
+</tr>
+
+</table>
+</div>
+</form>
+<form action ="/">
+<center><input type="submit" value="home"></form>
+
+</div><!--body div-->
+   <div id="footer"><hr/>
+<footer class="footer">
+   
+</footer>
+
+
+</body>
+</html>

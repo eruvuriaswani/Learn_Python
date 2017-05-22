@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="content">
+    <div class="row">
+      <div class="col-md-offset-2 col-md-8">
+        {% for m in messages %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title"><a href="/profile/{{ m.sender.id }}">{{ m.sender.name or m.sender.username }}</a></h2> <small>{{ m.time | prettydate }}</small>
+          </div>
+          <div class="panel-body">
+            {{ m.message }}
+          </div>
+        </div>
+        {% else %}
+          <h2> No messages </h2> 
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Batched API's</title>
+<style>
+	#footer {
+   	position:absolute;
+   	bottom:0;
+   	width:100%;
+   	height:70px;   /* Height of the footer */
+   	background:#808080;
+	}
+</style>
+</head>
+<body bgcolor="#808080">
+<div id="container">
+<div id="header">
+	<center>
+	<font color="white"><h1>Framework for Functional testing</h1></font>
+	</center><hr/>
+</div>
+<div id="body">
+<table>
+<center>
+</head>
+<body>
+<h1>The result for validation is as follows</h1>
+<table>
+<tr><td><form action="validate" method="post" name="checks">
+{% for l in table.keys() %}
+	{% for headers in table[l] %}
+		{% for result in headers %}
+			{% for f_result in result %}
+				<div class="link">
+    				<p>"{{f_result}}"</p>
+				</div>
+			{% endfor %}
+		{% endfor %}
+	{% endfor %}
+{% endfor %}
+</form></td></tr>
+ </table>
+</body>
+</html>
+
+

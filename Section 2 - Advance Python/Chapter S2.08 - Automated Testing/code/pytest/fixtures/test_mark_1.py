@@ -23,3 +23,7 @@ def test_nothing(i_set_things_up):
 @pytest.mark.trn
 def test_really_nothing(i_set_things_up):
     assert i_set_things_up['status'] == 'doing fine'
+
+@pytest.mark.trn
+def test_really_really_nothing(i_set_things_up):
+    assert i_set_things_up['status'] == 'doing fine'

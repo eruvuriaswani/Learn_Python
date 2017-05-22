@@ -1,0 +1,114 @@
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><i class="fa fa-leaf"></i> TestBox</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+                <li><a href="#">Start Testing</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Test Management <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-caret" role="menu">
+                        <li><a href="{{ url_for('testplan.index') }}">Testplan</a></li>
+                        <li><a href="#">Executions</a></li>
+                        <li><a href="#">Monitor</a></li>
+                        <li><a href="#">Testreport</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('testcase.index') }}">Case Management</a></li>
+                <li><a href="#">Admin Management</a></li>
+                <li><a href="#">Documents</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks"></i> Tasks <span class="badge">4</span> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-navbar navbar-grey dropdown-menu dropdown-caret">
+                        <li class="dropdown-header">
+                            <i class="fa fa-vimeo-square"></i>
+                            4 Tasks to complete
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="clearfix">
+                                    <span class="pull-left">Software Update</span>
+                                    <span class="pull-right">65%</span>
+                                </div>
+
+                                <div class="progress progress-mini ">
+                                    <div style="width:65%" class="progress-bar "></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="clearfix">
+                                    <span class="pull-left">Hardware Upgrade</span>
+                                    <span class="pull-right">35%</span>
+                                </div>
+
+                                <div class="progress progress-mini ">
+                                    <div style="width:35%" class="progress-bar progress-bar-danger"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="clearfix">
+                                    <span class="pull-left">Unit Testing</span>
+                                    <span class="pull-right">15%</span>
+                                </div>
+
+                                <div class="progress progress-mini ">
+                                    <div style="width:15%" class="progress-bar progress-bar-warning"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="clearfix">
+                                    <span class="pull-left">Bug Fixes</span>
+                                    <span class="pull-right">90%</span>
+                                </div>
+
+                                <div class="progress progress-mini progress-striped active">
+                                    <div style="width:90%" class="progress-bar progress-bar-success"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                See tasks with details
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Yunlong Mao <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-caret">
+                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fa fa-power-off"></i> Sign Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>

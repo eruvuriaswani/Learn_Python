@@ -14,5 +14,5 @@ def basic_fixture():
     
 
 def test_function(basic_fixture):
-    print("This si dummy test function")
+    print("This is dummy test function")
 

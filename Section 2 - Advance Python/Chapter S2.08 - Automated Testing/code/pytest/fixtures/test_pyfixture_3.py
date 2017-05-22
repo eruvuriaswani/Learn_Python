@@ -1,7 +1,8 @@
-#test_pyfixture_1.py
+# test_pyfixture_1.py
 import pytest
 
 x = 0
+
 
 class MyTester(object):
 
@@ -11,12 +12,12 @@ class MyTester(object):
         # self.use_arg_to_init_logging_part()
 
     def showArgs(self):
-        global x 
+        global x
         x += 1
         return("args", self.arg, "x", x)
 
     def showRequest(self):
-        print ("req", self.request)
+        print("req", self.request)
 
 
 @pytest.fixture
@@ -26,7 +27,9 @@ def tester(request):
 
 
 class TestIt:
-    @pytest.mark.parametrize('tester',[['var1', 'var2'], ['var3', 'var4']], indirect=True)
+    @pytest.mark.parametrize('tester', [['var1', 'var2'],
+                                        ['var3', 'var4']],
+                             indirect=True)
     def test_tc1(self, capsys, tester):
         with capsys.disabled():
             print(tester.showArgs())

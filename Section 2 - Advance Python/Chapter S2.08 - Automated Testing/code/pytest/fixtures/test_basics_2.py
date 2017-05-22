@@ -13,6 +13,7 @@ class TestBar:
     def bar(self, request):
         print(dir(request))
         print(request.funcargnames)
+        
         def fin():
             print('Teardown of fixture bar')
         request.addfinalizer(fin)

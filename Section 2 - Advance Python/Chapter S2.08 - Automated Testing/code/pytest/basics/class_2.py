@@ -15,23 +15,23 @@ def gfn():
 from sample_script import add, multiple
  
 
-def setup_function(function):
-    print(gfn(),  function.__name__)
- 
-def teardown_function(function):
-    print(gfn(),  function.__name__)
- 
-def test_numbers_3_4():
-    print(gfn())
-    assert add(3, 4) == 7 
- 
-def test_strings_a_3():
-    print(gfn())
-    assert multiple('a', 3) == 'aaa' 
+# def setup_function(function):
+#     print(gfn(),  function.__name__)
+#  
+# def teardown_function(function):
+#     print(gfn(),  function.__name__)
+#  
+# def test_numbers_3_4():
+#     print(gfn())
+#     assert add(3, 4) == 7 
+#  
+# def test_strings_a_3():
+#     print(gfn())
+#     assert multiple('a', 3) == 'aaa' 
  
  
 class Test_Class:
- 
+    
     def setup(self):
         print(gfn(), "MMM")
  

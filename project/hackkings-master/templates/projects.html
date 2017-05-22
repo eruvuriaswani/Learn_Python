@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <div class="content col-md-8 col-md-offset-2">
+        {% for project in project_list %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a href="/project/{{ project.id }}">{{ project.name }}</a> 
+              {% if project.state == CONSTANTS.STATES.PENDING %}<span class="label label-default pull-right">Pending</span>{% elif project.state == CONSTANTS.STATES.ONGOING %}<span class="label label-primary pull-right">Ongoing</span>{% endif %}
+            </h3>
+          </div>
+          <div class="panel-body">
+            {{ project.description }}
+          </div>
+          {% if project.get_skills() != [] %}<div class="panel-footer">
+              {% for skill in project.skills %}<span class="label label-info">{{ skill.name }}</span> <span class="pull-right">Proposed by <a href="/profile/{{ project.proposer.id }}">{{ project.proposer.username }}</a></span>{% endfor %}
+          </div>{% else %}<!-- No skills -->{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+{% endblock %}

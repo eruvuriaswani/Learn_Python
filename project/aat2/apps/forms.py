@@ -1,13 +1,15 @@
 from wtforms import (TextField, TextAreaField, SubmitField, validators,
                      PasswordField, StringField, BooleanField, SelectField)
-from .models import User
 from flask_wtf import Form
 # from .models import Project
+
+from .models import User
 
 
 class UploadScenarios(Form):
     projects = SelectField('Project Name', [validators.DataRequired()],
                            coerce=int)
+
 
 class ContactForm(Form):
     name = TextField("Name", [validators.Required("Please enter your name.")])

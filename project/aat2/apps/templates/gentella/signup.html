@@ -60,6 +60,8 @@
                 <div class="form-group">
                     {{ render_bootstrap_field(form.accept_tos) }}
                 </div>
+                    <input type="submit" value="Go">
+                     {{ form.csrf_token }}
                 <!--
                 {{ render_bootstrap_field(form.email) }} {{ render_bootstrap_field(form.password) }} {{ render_bootstrap_field(form.projects) }} {{ render_bootstrap_field(form.accept_tos) }}
                 <input type="submit" value="Go">

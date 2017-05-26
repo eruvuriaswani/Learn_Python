@@ -1,0 +1,77 @@
+{% extends "v2/layout.html" %} {% block css %}
+<!-- Switchery -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet"> -->
+<!-- starrr -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/starrr/dist/starrr.css')}}" rel="stylesheet"> -->
+<!-- bootstrap-daterangepicker -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet"> -->
+<!-- Datatables -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet"> -->
+
+<link href="{{ url_for( 'static', filename='v2/utils/css/input_file.css')}}" rel="stylesheet">
+<style>
+.rows {
+    margin: 1em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form id="upload" action="/upload_scenarios" method="POST" enctype="multipart/form-data">
+    <div class="row rows">
+        <div class="col-sm-4">Select Project</div>
+        <div class="col-sm-6">
+            <select name="projects" class="form-control">
+                {% for key, value in projects.items() %}
+                    <option id="{{ key }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row rows">
+        <div class="col-sm-4">Select HAR file to upload</div>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Browse… <input type="file" name=file style="display: none;" multiple="">
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly="">
+            </div>
+        </div> </div> 
+        <div class="row rows"> <div class="col-sm-4"></div> 
+            <div class="col-sm-6"> 
+                <button id="populate_tcs" class="btn btn-default btn-block">Upload Test Scenario's File</button> </div> 
+        </div> 
+    </form> </div>
+    {% endblock %} {% block js %}
+    <script>
+    $(document).on('change', ':file', function() {
+      var input = $(this),
+          numFiles = input.get(0).files ? input.get(0).files.length : 1,
+          label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
+
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready( function() {
+        $(':file').on('fileselect', function(event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+            if( input.length ) {
+                input.val(log);
+            } else {
+                if( log ) alert(log);
+            }
+
+        });
+    });
+        
+
+    </script>
+    {% endblock %}

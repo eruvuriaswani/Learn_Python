@@ -38,11 +38,6 @@ function updateDataTableSelectAllCtrl(table){
 }
 
 function get_selected_apis(){
-   // selected_apis
-   // var selected_apis = [];
-   // var $chkbox_checked = $('#example tbody input[type="checkbox"]:checked');
-   // return $chkbox_checked;
-
    var selectedIds = [];
 
    $('#example tbody input[type="checkbox"]:checked').each(function() {
@@ -55,25 +50,27 @@ function get_api_list(project_id){
    var rows_selected = [];
    var table = $('#example').DataTable({
       'ajax': '/get_free_apis_by_prj_name?proj='+project_id,
-          "scrollY":        "400px",
-        "scrollCollapse": true,
-        "paging":         false,
+      scrollY:        '35vh',
+      scrollCollapse: true,
+      paging:         false,
+      search: false,
+      info: false,
       'columnDefs': [{
-         'targets': 0,
-         'searchable':false,
-         'orderable':false,
-         'width':'1%',
-         'className': 'dt-body-center',
+      'targets': 0,
+      'searchable':false,
+      'orderable':false,
+      'width':'1%',
+      'className': 'api_id_1',
          'render': function (data, type, full, meta){
-             return '<input type="checkbox" id="' + data + '">';
+            return '<input type="checkbox" id="' + data + '">';
          }
       },
-         {
-         'targets': 1,
-         'className': 'api_id',
-         }],
+      {
+      'targets': 1,
+      'className': 'api_id',
+      }],
       'order': [1, 'asc']
-      // ,
+   // ,
       // 'rowCallback': function(row, data, dataIndex){
       //    // Get row ID
       //    var rowId = data[0];
@@ -112,13 +109,17 @@ $(document).ready(function (){
 
    $("#create_tcs").click(function(){
       var selected = get_selected_apis();
+      json_data = JSON.stringify({
+            'api_list': selected,
+            'tc_name': $("#tcs_name").val()
+         });
       $.post({
          url: "/create_tcs",
          dataType: "json",
-         data: {
-            apis: selected,
-            tc_name: $("#create_tcs").val()
-         }
-      })
+         data: {'data': json_data}
+      });
    });
+
+
+
 });

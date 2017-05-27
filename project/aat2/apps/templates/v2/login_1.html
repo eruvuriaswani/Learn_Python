@@ -1,0 +1,226 @@
+<!
+DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Auto Quality&reg;</title>
+        <link rel="stylesheet" href="{{ url_for( 'static', filename='v2/vendors/bootstrap/css/bootstrap.flatly.min.css')}}">
+        
+        <style>
+        /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+        @font-face {
+            font-family: "Exo";
+            url( {{ url_for( 'static', filename='v2/vendors/fonts/exo/Exo-Regular.ttf')}} format("truetype");
+        }
+
+            );
+        body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial;
+        font-size: 12px;
+        }
+        .center {
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+        }
+        label{
+            color: white;
+            font-size: 1.2em;
+        }
+        .header {
+
+        z-index: 2;
+        }
+        .header div {
+        float: left;
+        color: #BBDEFB;
+        text-shadow: 0 0 0.4em #2bcddb;
+        font-family: 'Exo', sans-serif;
+        font-size: 4em;
+        font-weight: 400;
+        }
+        .header div span {
+        color: #E44424 !important;
+        }
+
+        .header div span sup {
+            color: #2196F3 !important; 
+            vertical-align: super;
+            font-size: smaller;
+        }
+        /*
+        .login {
+        position: absolute;
+        top: calc(50% - 75px);
+        left: calc(50% - 50px);
+        height: 150px;
+        width: 350px;
+        padding: 10px;
+        z-index: 2;
+        }
+        .login input[type=text] {
+        width: 250px;
+        height: 30px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 2px;
+        color: #fff;
+        font-family: 'Exo', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 4px;
+        }
+        .login input[type=password] {
+        width: 250px;
+        height: 30px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 2px;
+        color: #fff;
+        font-family: 'Exo', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 4px;
+        margin-top: 10px;
+        }
+        .login input[type=button] {
+        width: 260px;
+        height: 35px;
+        background: #fff;
+        border: 1px solid #fff;
+        cursor: pointer;
+        border-radius: 2px;
+        color: #a18d6c;
+        font-family: 'Exo', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 6px;
+        margin-top: 10px;
+        }
+        .login input[type=button]:hover {
+        opacity: 0.8;
+        }
+        .login input[type=button]:active {
+        opacity: 0.6;
+        }
+        .login input[type=text]:focus {
+        outline: none;
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+        .login input[type=password]:focus {
+        outline: none;
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+        .login input[type=button]:focus {
+        opacity: 0.6;
+        width: 100%;
+        }
+        #signin {
+        outline: none;
+        width: 100%;
+        margin-top: 2em;
+        height: 3em;
+        font-family: 'Exo', sans-serif;
+        }
+        ::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.6);
+        }
+        ::-moz-input-placeholder {
+        color: rgba(255, 255, 255, 0.6);
+        }
+        dl {
+        border: 3px double #ccc;
+        padding: 0.5em;
+        }
+        dt {
+        float: left;
+        clear: left;
+        width: 100px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: navajowhite;
+        }
+        dt::after {
+        content: ":";
+        }
+        dd {
+        margin: 0 0 0 110px;
+        padding: 0 0 0.5em 0;
+        }
+        */
+
+        // Mixin
+.center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Usage
+.container {
+  width: 940px;
+  .center-block();
+  display: block;
+}
+
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+body{
+    background-image: url("{{ url_for( 'static', filename='v2/imgs/bg.png')}}");
+            background-size: cover;
+}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!--Row with two equal columns-->
+            <div class="row vertical-align">
+                <div class="col-sm-6 center-block" >
+                        <div class="header">
+            <div class="text-center col-sm-12">Auto <span>Quality<sup>&reg;</sup></span></div>
+        </div></div>
+                <div class="col-sm-6" style="border-left: gray 0.1em solid">
+                    <form id="signin" method="post" action="/signin" class="form-horizontal">
+                     {{ form.csrf_token }} 
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary col-sm-12">Sign in</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <!-- jQuery -->
+         <script src="{{ url_for( 'static', filename='v2/vendors/jquery/jquery-3.2.1.js')}}"></script>
+       
+        <script src="{{url_for('static', filename='gentella/js/prefixfree.min.js')}}"></script>
+        <!-- Bootstrap -->
+        <!-- <script src="{{ url_for( 'static', filename='gentella/vendors/bootstrap/dist/js/bootstrap.min.js' )}} "></script>-->
+    </body>
+</html>

@@ -93,6 +93,7 @@ def create_tcs():
     print("data>", data)
     for d in data.getlist('apis'):
         print(d)
+    return("{result: True}")
 
 
 @app.route("/uploaded_file", methods=['GET'])

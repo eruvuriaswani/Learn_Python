@@ -12,6 +12,13 @@ user_proj = db.Table(
     db.Column("project_id", db.Integer, db.ForeignKey("projects.id")),
 )
 
+testcase_request = db.Table(
+    "testcase_request",
+    db.metadata,
+    db.Column("testcase_id", db.Integer, db.ForeignKey("testcases.id")),
+    db.Column("request_id", db.Integer, db.ForeignKey("request.id")),
+)
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -67,7 +74,6 @@ class TestCases(db.Model):
     __tablename__ = "testcases"
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
-    # req_api_id = db.Column(db.Integer, db.ForeignKey('request.id'))
 
 ########################
 
@@ -150,8 +156,8 @@ class ApiRequests(db.Model):
     response = db.relationship("ApiResponse",
                                backref=db.backref("request", uselist=False))
 
-    testcases_id = db.Column(db.Integer, db.ForeignKey('testcases.id'))
     testcases = db.relationship("TestCases", backref="request",
+                                secondary=testcase_request,
                                 cascade="all,delete")
 
     def update_attribs(self, kwargs):

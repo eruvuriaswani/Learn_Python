@@ -5,9 +5,10 @@ function get_list(ajax_url, t_list){
    // console.info(ajax_url);
    $.get(ajax_url, function(data, status){
       // console.info("data>>> " + data['data']);
+      $("#testcases").html('');
        $.each(data['data'], function( api_id, name ) {
          console.info(name[1]);
-        $("#testcases").append("<a class='tcs list-group-item' id=" + name[0] + ">" +name[1]+ "</a>"); 
+        $("#testcases").append("<a href='#' class='tcs list-group-item' id=" + name[0] + ">" +name[1]+ "</a>"); 
          
        });
        }); 
@@ -20,6 +21,11 @@ $(document).ready(function (){
       var project_id = $('#projects option:selected').attr('id');
       var ajax_url = '/get_tcs?proj='+project_id;
       get_list(ajax_url, $("#testcases"));
+   });
+
+   $(".tcs").click(function(){
+      var api_id = $(this).attr(id);
+      cosnole.info(api_id);
    });
 
    $('#remove_api').click(function(){

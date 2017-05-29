@@ -9,6 +9,7 @@ import json
 import os
 import string
 import random
+import yaml
 
 from .forms import SigninForm, RegistrationForm
 from .models import db, User, Project, ApiRequests, TestCases
@@ -33,6 +34,13 @@ def view_tcs():
     return render_template("v2/view_testcases.html", projects=project_dict)
 
 
+@app.route("/set_api_validation", methods=['GET'])
+@login_required
+def set_api_validation():
+    project_dict = User.get_projects(session['user_id'])
+    return render_template("v2/edit_apis.html", projects=project_dict)
+
+
 @app.route("/get_tcs", methods=['GET'])
 @login_required
 @nocache
@@ -42,7 +50,7 @@ def get_tcs():
     testcases = TestCases.query \
                          .filter_by(project_id=proj) \
                          .options(db.load_only('id', 'name')).all()
-    return jsonify(data=[(a.id, a.id, a.name) for a in testcases])
+    return jsonify(data=[(a.id, a.name) for a in testcases])
 
 
 @app.route("/get_my_projects", methods=['GET'])
@@ -53,6 +61,23 @@ def get_my_projects():
 
 
 # Testcases Exection Starts
+@app.route("/start_tcs", methods=['POST'])
+@login_required
+def start_tcs():
+    """."""
+    data =request.get_json()
+    tcs = data['tc_list']
+    tc_data = {}
+    for tc in tcs:
+        apis = TestCases.query.filter_by(id=tc).all()
+        # .options(db.load_only('request'))
+        print("apis> ", apis.request)
+    # with open('data.yml', 'w') as outfile:
+    #     yaml.dump(data, outfile, default_flow_style=False)
+
+    return "ok"
+
+
 @app.route("/execute_tcs", methods=['POST'])
 @login_required
 def execute_tcs():
@@ -68,7 +93,7 @@ def execute_tcs():
 def login():
     """."""
     signin_form = SigninForm()
-    return render_template('v2/login.html',
+    return render_template('v2/login_1.html',
                            form=signin_form)
 
 
@@ -76,7 +101,7 @@ def login():
 @login_required
 def home():
     """."""
-    return render_template('gentella/dashboard.html')
+    return render_template('v2/dashboard.html')
 
 
 #@app.route('/run')
@@ -92,8 +117,8 @@ def home():
 
 
 @app.route("/get_free_apis", methods=['GET'])
-# @login_required
-# @nocache
+@login_required
+@nocache
 def get_free_apis():
     """."""
     project_id = request.args.get('proj')
@@ -102,7 +127,6 @@ def get_free_apis():
                   .filter_by(flag_used=False) \
                   .options(db.load_only('id', "url")).all()
     return jsonify(data=[(False, a.id, a.url) for a in d])
-    # return jsonify(data=[{'id': a.id, 'url': a.url} for a in d])
 
 
 @app.route("/get_free_apis_by_prj_name", methods=['GET'])
@@ -124,9 +148,6 @@ def get_free_apis_by_prj_name():
 def create_tcs():
     """."""
     data = request.get_json()
-    #print("data>", data)
-    # print()
-    # get testcases ids
     api_ids = data['api_list']
     tc_name = data['tc_name']
     project_id = data['project']
@@ -176,27 +197,27 @@ def remove_apis():
 
 @app.route('/upload_scenarios', methods=['GET', 'POST'])
 @login_required
+@nocache
 def upload_scenarios():
-    """."""
     if request.method == 'POST':
 
         if 'file' not in request.files:
             print("no file part")
             flash('No file part')
             return redirect(request.url)
-        filename = request.files['file']
+        file = request.files['file']
         # if user does not select file, browser also
         # submit a empty part without filename
-        if filename.filename == '':
+        if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if filename and allowed_file(file.filename):
+        if file and allowed_file(file.filename):
             filename = ''.join(random.sample(string.ascii_lowercase, 10))
             filename = os.path.join(app.config['UPLOAD_FOLDER'],
                                     secure_filename(filename))
-            filename.save(filename)
+            file.save(filename)
             proj = request.form.to_dict()['projects']
-            #print(type(proj))
+            print(type(proj))
             proj = Project.query.filter_by(name=proj).first()
             print(proj)
             uploadFile(filename, proj)
@@ -205,6 +226,7 @@ def upload_scenarios():
         return render_template('v2/dashboard.html')
     project_dict = User.get_projects(session['user_id'])
     return render_template("v2/upload.html", projects=project_dict)
+
 
 
 # @app.route('/test')

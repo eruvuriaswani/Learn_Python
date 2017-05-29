@@ -1,88 +1,25 @@
-//
-// Updates "Select all" control in a data table
-//
-// window.onbeforeunload = function() {
-//   localStorage.removeItem(key);
-//   return '';
-// };
 
 
-
-function updateDataTableSelectAllCtrl(table){
-   var $table             = table.table().node();
-   var $chkbox_all        = $('tbody input[type="checkbox"]', $table);
-   var $chkbox_checked    = $('tbody input[type="checkbox"]:checked', $table);
-   var chkbox_select_all  = $('thead input[name="select_all"]', $table).get(0);
-
-   // If none of the checkboxes are checked
-   if($chkbox_checked.length === 0){
-      chkbox_select_all.checked = false;
-      if('indeterminate' in chkbox_select_all){
-         chkbox_select_all.indeterminate = false;
-      }
-
-   // If all of the checkboxes are checked
-   } else if ($chkbox_checked.length === $chkbox_all.length){
-      chkbox_select_all.checked = true;
-      if('indeterminate' in chkbox_select_all){
-         chkbox_select_all.indeterminate = false;
-      }
-
-   // If some of the checkboxes are checked
-   } else {
-      chkbox_select_all.checked = true;
-      if('indeterminate' in chkbox_select_all){
-         chkbox_select_all.indeterminate = true;
-      }
-   }
-}
-
-function get_selected_apis(){
-   var selectedIds = [];
-
-   $('#example tbody input[type="checkbox"]:checked').each(function() {
-       selectedIds.push($(this).attr('id'));
-   });
-   return selectedIds;
-}
-
-
-function get_list(ajax_url){
+function get_list(ajax_url, t_list){
    var rows_selected = [];
-   console.info(ajax_url);
-   var table = $('#example').DataTable({
-      ajax:           ajax_url,
-      scrollY:        '35vh',
-      scrollCollapse: true,
-      paging:         false,
-      search:         false,
-      info:           false,
-      'columnDefs': [{
-      'targets': 0,
-      'searchable':false,
-      'orderable':false,
-      'width':'2%',
-      'className': 'id',
-         'render': function (data, type, full, meta){
-            return '<input type="checkbox" id="' + data + '">';
-         }
-      },
-      {
-      'targets': 1
-      }],
-      'order': [1, 'asc']
-   });
-}
+   // console.info(ajax_url);
+   $.get(ajax_url, function(data, status){
+      // console.info("data>>> " + data['data']);
+       $.each(data['data'], function( api_id, name ) {
+         console.info(name[1]);
+        $("#testcases").append("<a class='tcs list-group-item' id=" + name[0] + ">" +name[1]+ "</a>"); 
+         
+       });
+       }); 
+    };
+
 
 
 $(document).ready(function (){
-   window.localStorage.clear();
-   // Array holding selected row IDs
-   
-   $("#get_api_list").click(function(){
+   $("#get_tcs").click(function(){
       var project_id = $('#projects option:selected').attr('id');
       var ajax_url = '/get_tcs?proj='+project_id;
-      get_list(ajax_url);
+      get_list(ajax_url, $("#testcases"));
    });
 
    $('#remove_api').click(function(){
@@ -98,15 +35,13 @@ $(document).ready(function (){
       });
    });
 
-   $("#create_tcs").click(function(){
-      var selected = get_selected_apis();
+   $("#execute_tcs").click(function(){
+      var selected = get_selected();
       json_data = JSON.stringify({
-            'api_list': selected,
-            'tc_name': $("#tcs_name").val(),
-            'project': $('#projects option:selected').attr('id')
+            'tc_list': selected
          });
       $.post({
-         url: "/create_tcs",
+         url: "/start_tcs",
          contentType: 'application/json; charset=utf-8',
          dataType: 'json',
          async: true,
@@ -115,7 +50,6 @@ $(document).ready(function (){
             console.info(msg);
             $("#result").empty();
             $("#result").append(msg['msg']);
-            // $("#result").val(msg);
          }
       });
    });

@@ -165,8 +165,8 @@ class ApiRequests(db.Model):
                                backref=db.backref("request", uselist=False))
     # secondary=testcase_request,
     testcases = db.relationship("TestCases",
-                                                                    secondary="testcase_request",
-                                                                    backref="request")
+                                secondary="testcase_request",
+                                backref="request")
 
     def update_attribs(self, kwargs):
         # all those keys will be initialized as class attributes

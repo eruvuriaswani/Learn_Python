@@ -1,0 +1,60 @@
+{% extends "v2/layout.html" %} {% block css %}
+
+<!-- Datatables -->
+<link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+<link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/select.dataTables.min.css')}}" rel="stylesheet">
+
+<meta name="robots" content="noindex, nofollow">
+  <style>
+    .rows {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+  </style>
+
+
+  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/testcases.js')}}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row rows">
+    <div class="col-sm-2">Select Project</div>
+    <div class="col-sm-8">
+        <select id="projects" name="projects" class="form-control block">
+            {% for key, value in projects.items() %}
+                <option id="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <input type="button" id="get_tcs" class="form-control btn-primary" value="Get Api List">
+    </div>
+</div>
+    <div class="row rows">
+      <div class="col-sm-2">
+      <div class="col-sm-12">List of Test Cases</div>
+        <div class="list-group" id="testcases">
+          
+        <!--   <a href="#" class="list-group-item">Second item</a>
+          <a href="#" class="list-group-item">Third item</a> -->
+        </div>
+      </div>
+    </div>
+</div>
+     </form>
+</div>
+
+
+
+    {% endblock %} {% block js %}
+    <script>
+    $("#testcases").click(function(){
+      // lets get the list of all the api id's selected and store them in a list
+      var selected_apis = $("#")
+    });
+    </script>
+
+    {% endblock %}

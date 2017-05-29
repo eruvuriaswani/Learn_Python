@@ -59,7 +59,6 @@ def uploadFile(filename, proj):
         resp.request = req
         req.project = proj
         req.project_id = req.project.id
-        print(req.project.id)
         db.session.add(req)
         db.session.flush()
     db.session.commit()

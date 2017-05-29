@@ -46,42 +46,31 @@ function get_selected_apis(){
    return selectedIds;
 }
 
-function get_api_list(project_id){
+
+function get_list(ajax_url){
    var rows_selected = [];
-   console.info(project_id);
+   console.info(ajax_url);
    var table = $('#example').DataTable({
-      'ajax': '/get_free_apis_by_prj_name?proj='+project_id,
+      ajax:           ajax_url,
       scrollY:        '35vh',
       scrollCollapse: true,
       paging:         false,
-      search: false,
-      info: false,
+      search:         false,
+      info:           false,
       'columnDefs': [{
       'targets': 0,
       'searchable':false,
       'orderable':false,
-      'width':'1%',
-      'className': 'api_id_1',
+      'width':'2%',
+      'className': 'id',
          'render': function (data, type, full, meta){
             return '<input type="checkbox" id="' + data + '">';
          }
       },
       {
-      'targets': 1,
-      'className': 'api_id',
+      'targets': 1
       }],
       'order': [1, 'asc']
-   // ,
-      // 'rowCallback': function(row, data, dataIndex){
-      //    // Get row ID
-      //    var rowId = data[0];
-
-      //    // If row ID is in the list of selected row IDs
-      //    if($.inArray(rowId, rows_selected) !== -1){
-      //       $(row).find('input[type="checkbox"]').prop('checked', true);
-      //       $(row).addClass('selected');
-      //    }
-      // }
    });
 }
 
@@ -92,8 +81,8 @@ $(document).ready(function (){
    
    $("#get_api_list").click(function(){
       var project_id = $('#projects option:selected').attr('id');
-      console.info(project_id);
-      get_api_list(project_id);
+      var ajax_url = '/get_tcs?proj='+project_id;
+      get_list(ajax_url);
    });
 
    $('#remove_api').click(function(){

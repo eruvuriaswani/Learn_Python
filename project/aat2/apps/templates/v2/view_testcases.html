@@ -5,8 +5,7 @@
 <link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/select.dataTables.min.css')}}" rel="stylesheet">
 
 <meta name="robots" content="noindex, nofollow">
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='v2/vendors/datatable/css/jquery.dataTables.min.css')}}"> -->
-<!-- <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='v2/vendors/datatable/css/demo.css')}}" /> -->
+
 
   <style>
     .rows {
@@ -17,7 +16,7 @@
 
 
   <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/jquery.dataTables.min.js')}}"></script>
-  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/populate_table.js')}}"></script>
+  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/testcases.js')}}"></script>
 
 {% endblock %}
 
@@ -33,59 +32,65 @@
         </select>
     </div>
     <div class="col-sm-2">
-        <input type="button" id="get_api_list" class="form-control btn-primary" value="Get Api List">
+        <input type="button" id="get_api_list" class="form-control btn-primary" value="Get Testcases">
     </div>
 </div>
-    <form id="upload" action="/upload_scenarios" method="POST" >
+    <form id="upload" action="/run_testcases" method="POST" >
     <div class="row rows">
         <table id="example" class="table display select" cellspacing="0" width="100%">
    <thead>
       <tr>
-         <th>Select</th>
-         <th class="api_id">API ID</th>
-         <th>API URL</th>
+         <th></th>
+         <th class="api_id">Testcase ID</th>
+         <th>Test Case</th>
       </tr>
    </thead>
    <tfoot>
       <tr>
          <th></th>
-         <th>API ID</th>
-         <th>API URL</th>
+         <th class="api_id">Testcase ID</th>
+         <th>Test Case</th>
       </tr>
    </tfoot>
 </table>
     </div>
     <div class="panel-group col-sm-8">
       <div class="panel panel-primary ">
-      <div class="panel-heading">Test Case Creation</div>
+      <div class="panel-heading">Test Case Operations</div>
       <div class="panel-body">
+      <!--
       <div class="row rows">
-        <div class="col-sm-3">Testcase Name</div> 
-        <div class="col-sm-9"> 
-          <input type="text" id="tcs_name" class='form-control'> 
-        </div> 
+        <div class="col-sm-3">Testcase Name</div>
+        <div class="col-sm-9">
+          <input type="text" id="tcs_name" class='form-control'>
+        </div>
       </div>
        <div class="row rows">
-        <div class="col-sm-3"></div> 
+        <div class="col-sm-3"></div>
         <div class="col-sm-9">
           <label id="result" class="col-sm-12"></label>
           </div>
       </div>
+      -->
       <div class="row rows">
-        <div class="col-sm-3"></div> 
-        <div class="col-sm-9">
-          <input type="<button type="button" class="btn btn-primary btn-block" id="create_tcs" value="Create test case">
+<!--
+        <div class="col-sm-3"></div>
+-->
+        <div class="col-sm-12">
+          <input type="button" class="btn btn-primary btn-block" id="execute_tcs" value="Execute test case">
         </div>
       </div>
     </div>
     </div>
     </div>
 
+<!--
     <div class="panel-group col-sm-4">
       <div class="panel panel-primary">
-      <div class="panel-heading">Mark API's for Removal</div>
+      <div class="panel-heading">Mark Testcases for Removal</div>
       <div class="panel-body"><button name='remove_api' id='remove_api'>Remove Selected API's</button></div>
     </div>
+-->
     </div>
 
      </form>

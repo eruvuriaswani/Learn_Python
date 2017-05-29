@@ -1,3 +1,5 @@
+"""."""
+
 from werkzeug import generate_password_hash, check_password_hash
 from apps import db
 from flask_login import UserMixin
@@ -21,6 +23,8 @@ testcase_request = db.Table(
 
 
 class User(db.Model, UserMixin):
+    """."""
+
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
@@ -66,13 +70,14 @@ class Project(db.Model):
         self.name = name
         self.desc = desc
 
-    def get_id(name):
+    def get_id(self, name):
         return self.query.filter_by(name=name).first()
 
 
 class TestCases(db.Model):
     __tablename__ = "testcases"
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
 ########################
@@ -124,6 +129,7 @@ class PostData(db.Model):
 
 
 class QueryString(db.Model):
+    """."""
     __tablename__ = "queryString"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -133,6 +139,8 @@ class QueryString(db.Model):
 
 
 class ApiRequests(db.Model):
+    """."""
+
     __tablename__ = "request"
     id = db.Column(db.Integer, primary_key=True)
     flag_used = db.Column(db.Boolean, default=False)
@@ -155,10 +163,10 @@ class ApiRequests(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
     response = db.relationship("ApiResponse",
                                backref=db.backref("request", uselist=False))
-
-    testcases = db.relationship("TestCases", backref="request",
-                                secondary=testcase_request,
-                                cascade="all,delete")
+    # secondary=testcase_request,
+    testcases = db.relationship("TestCases",
+                                                                    secondary="testcase_request",
+                                                                    backref="request")
 
     def update_attribs(self, kwargs):
         # all those keys will be initialized as class attributes

@@ -23,9 +23,9 @@ $(document).ready(function (){
       get_list(ajax_url, $("#testcases"));
    });
 
-   $(".tcs").click(function(){
-      var api_id = $(this).attr(id);
-      cosnole.info(api_id);
+   $("#testcases").on('click', '.tcs', function(){
+      console.info(this.id);
+      cosnole.info(this.id);
    });
 
    $('#remove_api').click(function(){

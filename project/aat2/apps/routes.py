@@ -9,7 +9,7 @@ import json
 import os
 import string
 import random
-import yaml
+# import yaml
 
 from .forms import SigninForm, RegistrationForm
 from .models import db, User, Project, ApiRequests, TestCases
@@ -37,8 +37,21 @@ def view_tcs():
 @app.route("/set_api_validation", methods=['GET'])
 @login_required
 def set_api_validation():
+    """."""
     project_dict = User.get_projects(session['user_id'])
     return render_template("v2/edit_apis.html", projects=project_dict)
+
+
+@app.route("/get_apis", methods=['GET'])
+@login_required
+@nocache
+def get_apis():
+    """View the existing testcases for the project."""
+    tc_id = request.args.get('tc_id')
+    testcases = ApiRequests.query \
+                           .filter(ApiRequests.testcases.any(id=tc_id)) \
+                           .options(db.load_only('id', 'url')).all()
+    return jsonify(data=[(a.id, a.url.rsplit('/', 1)[1]) for a in testcases])
 
 
 @app.route("/get_tcs", methods=['GET'])
@@ -65,9 +78,9 @@ def get_my_projects():
 @login_required
 def start_tcs():
     """."""
-    data =request.get_json()
+    data = request.get_json()
     tcs = data['tc_list']
-    tc_data = {}
+    # tc_data = {}
     for tc in tcs:
         apis = TestCases.query.filter_by(id=tc).all()
         # .options(db.load_only('request'))
@@ -104,16 +117,16 @@ def home():
     return render_template('v2/dashboard.html')
 
 
-#@app.route('/run')
-#@login_required
-#def run():
-    #"""."""
-    #project_dict = User.get_projects(session['user_id'])
-    #return render_template('v2/view_testcases.html',
-                           #projects=project_dict,
-                           #username="johri_m@hcl.com",
-                           #testcases=[{"name": "Check the Register"},
-                                      #{"name": "New Test for Register"}])
+# @app.route('/run')
+# @login_required
+# def run():
+#     """."""
+#     project_dict = User.get_projects(session['user_id'])
+#     return render_template('v2/view_testcases.html',
+#                            projects=project_dict,
+#                            username="johri_m@hcl.com",
+#                            testcases=[{"name": "Check the Register"},
+#                                       {"name": "New Test for Register"}])
 
 
 @app.route("/get_free_apis", methods=['GET'])
@@ -181,7 +194,6 @@ def uploaded_file():
 # @login_required
 def remove_apis():
     """."""
-    #print("<<", request.form, ">>")
     data = request.form
     for d in data.getlist('api_list'):
         # TODO :
@@ -199,6 +211,7 @@ def remove_apis():
 @login_required
 @nocache
 def upload_scenarios():
+    """."""
     if request.method == 'POST':
 
         if 'file' not in request.files:
@@ -226,7 +239,6 @@ def upload_scenarios():
         return render_template('v2/dashboard.html')
     project_dict = User.get_projects(session['user_id'])
     return render_template("v2/upload.html", projects=project_dict)
-
 
 
 # @app.route('/test')

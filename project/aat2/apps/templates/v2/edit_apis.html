@@ -32,7 +32,7 @@
     <div class="col-sm-2">
         <input type="button" id="get_tcs" class="form-control btn-primary" value="Get Api List">
     </div>
-</div>
+
 
     <div class="row rows">
       <div class="col-sm-2">
@@ -57,14 +57,11 @@
       </div>
       <div class="row rows">
       <div class="col-sm-2">
-       <div class="list-group col-sm-12" id="testcases">
+        <div class="list-group col-sm-12" id="testcases">
         </div>
-        </div>
+      </div>
       <div class="col-sm-2">
-      <div class="col-sm-12">List of REST API</div>
-          
-        <!--   <a href="#" class="list-group-item">Second item</a>
-          <a href="#" class="list-group-item">Third item</a> -->
+        <div class="list-group col-sm-12" id="apis">
         </div>
       <div class="col-sm-8">
       <div class="col-sm-12">List of Test Cases</div>
@@ -74,12 +71,8 @@
           <a href="#" class="list-group-item">Third item</a> -->
         </div>
       </div>
-      </div>
      </form>
 </div>
+{% endblock %} {% block js %}
 
-
-
-    {% endblock %} {% block js %}
-
-    {% endblock %}
+{% endblock %}

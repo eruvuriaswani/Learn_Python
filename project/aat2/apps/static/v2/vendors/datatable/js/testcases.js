@@ -1,31 +1,31 @@
 
 
-function get_list(ajax_url, t_list){
+function get_list(ajax_url, idnf, cls){
    var rows_selected = [];
    // console.info(ajax_url);
    $.get(ajax_url, function(data, status){
-      // console.info("data>>> " + data['data']);
-      $("#testcases").html('');
-       $.each(data['data'], function( api_id, name ) {
-         console.info(name[1]);
-        $("#testcases").append("<a href='#' class='tcs list-group-item' id=" + name[0] + ">" +name[1]+ "</a>"); 
-         
-       });
-       }); 
-    };
-
+      $(idnf).html('');
+      $.each(data['data'], function( api_id, name ) {
+         $(idnf).append("<a href='#' class='"
+                                + cls + " list-group-item' id="
+                                + name[0] + ">" +name[1]+ "</a>"); 
+      });
+   }); 
+};
 
 
 $(document).ready(function (){
    $("#get_tcs").click(function(){
       var project_id = $('#projects option:selected').attr('id');
       var ajax_url = '/get_tcs?proj='+project_id;
-      get_list(ajax_url, $("#testcases"));
+      get_list(ajax_url, $("#testcases", ".tcs"));
    });
 
    $("#testcases").on('click', '.tcs', function(){
-      console.info(this.id);
-      cosnole.info(this.id);
+      tc_id = this.id;
+      console.info(tc_id);
+      var ajax_url = '/get_apis?tc_id=' + tc_id;
+      get_list(ajax_url, $("#apis"), ".api");
    });
 
    $('#remove_api').click(function(){

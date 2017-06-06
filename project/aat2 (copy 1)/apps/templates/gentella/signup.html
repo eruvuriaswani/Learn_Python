@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! |</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for( 'static', filename='gentella/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ url_for( 'static', filename='gentella/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{ url_for( 'static', filename='gentella/vendors/nprogress/nprogress.css')}}" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="{{ url_for( 'static', filename='gentella/vendors/animate.css/animate.min.css')}}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <!-- <link href="{{ url_for( 'static', filename='gentella/build/css/custom.min.css')}}" rel="stylesheet">-->
+    <style>
+
+
+    </style>
+
+    <!-- jQuery -->
+    <script src="{{ url_for( 'static', filename='gentella/vendors/jquery/dist/jquery.min.js')}}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ url_for( 'static', filename='gentella/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+</head>
+
+<body class="">
+    <div>
+        <section class="login_content">
+            {% macro render_bootstrap_field(field) %}
+
+            <div class="form-group {% if field.errors %} error {% endif %}">
+                <label class="col-lg-2 control-label">{{ field.label }}</label>
+
+                <div class="col-lg-8">
+                    {{ field(class='form-control')|safe }} {% if field.errors %} {% for error in field.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br> {% endfor %} {% endif %}
+                </div>
+            </div>
+            {% endmacro %}
+
+            <form method="POST" action="#">
+                <div class="form-group">
+                    {{ render_bootstrap_field(form.email) }}
+                </div>
+                <div class="form-group">
+                    {{ render_bootstrap_field(form.password) }}
+                </div>
+                <div class="form-group">
+                    {{ render_bootstrap_field(form.projects) }}
+                </div>
+                <div class="form-group">
+                    {{ render_bootstrap_field(form.accept_tos) }}
+                </div>
+                    <input type="submit" value="Go">
+                     {{ form.csrf_token }}
+                <!--
+                {{ render_bootstrap_field(form.email) }} {{ render_bootstrap_field(form.password) }} {{ render_bootstrap_field(form.projects) }} {{ render_bootstrap_field(form.accept_tos) }}
+                <input type="submit" value="Go">
+                -->
+            </form>
+            <!--
+            <h1>Create Account</h1>
+            <form id="create_user" method="post" action="/signup">
+                {{ form.csrf_token }} {% from "gentella/_formhelpers.html" import render_field %}
+
+                <dl> {{ render_field(form.email) }} {{ render_field(form.password) }} {{ render_field(form.projects) }} {{ render_field(form.accept_tos) }}
+                </dl>
+                <p><input type=submit value=Register>
+
+            </form>
+            <div class="clearfix"></div>
+
+            <div class="separator">
+                <p class="change_link">Already a member ?
+                    <a href="#signin" class="to_register"> Log in </a>
+                </p>
+
+                <div class="clearfix"></div>
+
+
+            </div>
+-->
+
+
+        </section>
+
+        <!--
+        <div class="login_wrapper">
+<div class="form login_form">
+
+</div>
+
+<div id="register" class="animate form registration_form">
+    <section class="login_content">
+
+
+    </section>
+</div>
+</div>
+-->
+    </div>
+
+    <script>
+        $().ready(function() {
+            //            $("#createuser").click(function() { // $.post("/signup", $("#create_user").serialize(), function(data) { // }); // });
+        });
+
+    </script>
+</body>
+
+</html>

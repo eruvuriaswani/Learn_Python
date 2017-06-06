@@ -1,0 +1,81 @@
+{% extends "v2/layout.html" %} {% block css %}
+
+<!-- Datatables -->
+<link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+<link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/select.dataTables.min.css')}}" rel="stylesheet">
+
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='v2/vendors/datatable/css/jquery.dataTables.min.css')}}">
+<link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='v2/vendors/datatable/css/demo.css')}}" />
+
+<style>
+.rows {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+</style>
+
+
+ <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/jquery.dataTables.min.js')}}"></script>
+
+  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/populate_table.js')}}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row rows">
+    <div class="col-sm-4">Select Project</div>
+    <div class="col-sm-5">
+        <select id="projects" name="projects" class="form-control">
+            {% for key, value in projects.items() %}
+                <option id="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <button id="get_api_list" class="form-control">Get Api List</button>
+    </div>
+</div>
+
+<div class="row rows">
+<div class="col-sm-4">
+Select the API's and click on the button to remove the api's from the below list
+</div>
+ <div class="col-sm-5">
+<input type="button" name='remove_api' class="bt-block btn-primary" id='remove_api'>Delete Selected Tests</input>
+ </div>
+</div>
+
+    <form id="upload" action="/upload_scenarios" method="POST" >
+    <div class="row rows">
+        <table id="example" class="table display select" cellspacing="0" width="100%">
+   <thead>
+      <tr>
+         <!-- <th><input name="select_all" value="1" type="checkbox"></th> -->
+         <th>Select</th>
+         <th class="api_id">API ID</th>
+         <th>API URL</th>
+      </tr>
+   </thead>
+   <tfoot>
+      <tr>
+         <th></th>
+         <th>API ID</th>
+         <th>API URL</th>
+      </tr>
+   </tfoot>
+</table>
+    </div>
+    <div class="row rows"> <div class="col-sm-4">Provide Testcase Name</div> <div
+        class="col-sm-6"> 
+        	<input type="text" name="tcs_name" class='form-control'> 
+        </button> </div> </div>
+
+        <div class="row rows"> <div class="col-sm-4"></div> <div
+        class="col-sm-6"> <button id="create_tcs" class="btn btn-default btn-block">Create Test Case</button> </div> </div> 
+     </form> </div>
+
+    {% endblock %} {% block js %}
+
+    {% endblock %}

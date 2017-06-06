@@ -5,16 +5,12 @@
 <link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/select.dataTables.min.css')}}" rel="stylesheet">
 
 <meta name="robots" content="noindex, nofollow">
-
-
   <style>
     .rows {
         margin-top: 1em;
         margin-bottom: 1em;
     }
   </style>
-
-
   <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/jquery.dataTables.min.js')}}"></script>
   <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/testcases.js')}}"></script>
 
@@ -59,7 +55,7 @@
       <div class="panel-heading">Test Case Operations</div>
       <div class="panel-body">
       <!--
-      <div class="row rows">
+      <div class="row rows style="padding-left:5px;"">
         <div class="col-sm-3">Testcase Name</div>
         <div class="col-sm-9">
           <input type="text" id="tcs_name" class='form-control'>
@@ -73,9 +69,6 @@
       </div>
       -->
       <div class="row rows">
-<!--
-        <div class="col-sm-3"></div>
--->
         <div class="col-sm-12">
           <input type="button" class="btn btn-primary btn-block" id="execute_tcs" value="Execute test case">
         </div>
@@ -83,14 +76,6 @@
     </div>
     </div>
     </div>
-
-<!--
-    <div class="panel-group col-sm-4">
-      <div class="panel panel-primary">
-      <div class="panel-heading">Mark Testcases for Removal</div>
-      <div class="panel-body"><button name='remove_api' id='remove_api'>Remove Selected API's</button></div>
-    </div>
--->
     </div>
 
      </form>

@@ -9,7 +9,7 @@ import json
 import os
 import string
 import random
-import yaml
+# import yaml
 
 from .forms import SigninForm, RegistrationForm
 from .models import db, User, Project, ApiRequests, TestCases
@@ -31,12 +31,13 @@ def allowed_file(filename):
 def view_tcs():
     """."""
     project_dict = User.get_projects(session['user_id'])
-    return render_template("v2/view_testcases.html", projects=project_dict)
+    return render_template("v3/view_testcases.html", projects=project_dict)
 
 
 @app.route("/set_api_validation", methods=['GET'])
 @login_required
 def set_api_validation():
+    """."""
     project_dict = User.get_projects(session['user_id'])
     return render_template("v2/edit_apis.html", projects=project_dict)
 
@@ -53,6 +54,18 @@ def get_tcs():
     return jsonify(data=[(a.id, a.name) for a in testcases])
 
 
+@app.route("/get_apis", methods=['GET'])
+@login_required
+@nocache
+def get_apis():
+    """View the existing testcases for the project."""
+    proj = request.args.get('tc_id')
+    testcases = ApiRequests.query \
+                           .filter(ApiRequests.testcases.any(id=proj)) \
+                           .options(db.load_only('id', 'url')).all()
+    return jsonify(data=[(a.id, a.url.rsplit("/", 1)[1]) for a in testcases])
+
+
 @app.route("/get_my_projects", methods=['GET'])
 @login_required
 def get_my_projects():
@@ -65,9 +78,9 @@ def get_my_projects():
 @login_required
 def start_tcs():
     """."""
-    data =request.get_json()
+    data = request.get_json()
     tcs = data['tc_list']
-    tc_data = {}
+    # tc_data = {}
     for tc in tcs:
         apis = TestCases.query.filter_by(id=tc).all()
         # .options(db.load_only('request'))
@@ -75,7 +88,7 @@ def start_tcs():
     # with open('data.yml', 'w') as outfile:
     #     yaml.dump(data, outfile, default_flow_style=False)
 
-    return "ok"
+    return "{'result': 'ok'}"
 
 
 @app.route("/execute_tcs", methods=['POST'])
@@ -101,19 +114,19 @@ def login():
 @login_required
 def home():
     """."""
-    return render_template('v2/dashboard.html')
+    return render_template('v3/index.html')
 
 
-#@app.route('/run')
-#@login_required
-#def run():
-    #"""."""
-    #project_dict = User.get_projects(session['user_id'])
-    #return render_template('v2/view_testcases.html',
-                           #projects=project_dict,
-                           #username="johri_m@hcl.com",
-                           #testcases=[{"name": "Check the Register"},
-                                      #{"name": "New Test for Register"}])
+# @app.route('/run')
+# @login_required
+# def run():
+#     """."""
+#     project_dict = User.get_projects(session['user_id'])
+#     return render_template('v2/view_testcases.html',
+#                            projects=project_dict,
+#                            username="johri_m@hcl.com",
+#                            testcases=[{"name": "Check the Register"},
+#                                       {"name": "New Test for Register"}])
 
 
 @app.route("/get_free_apis", methods=['GET'])
@@ -181,7 +194,7 @@ def uploaded_file():
 # @login_required
 def remove_apis():
     """."""
-    #print("<<", request.form, ">>")
+    # print("<<", request.form, ">>")
     data = request.form
     for d in data.getlist('api_list'):
         # TODO :
@@ -199,6 +212,7 @@ def remove_apis():
 @login_required
 @nocache
 def upload_scenarios():
+    """."""
     if request.method == 'POST':
 
         if 'file' not in request.files:
@@ -223,16 +237,23 @@ def upload_scenarios():
             uploadFile(filename, proj)
             return redirect(url_for('uploaded_file'))
 
-        return render_template('v2/dashboard.html')
+        return render_template('v3/dashboard.html')
     project_dict = User.get_projects(session['user_id'])
-    return render_template("v2/upload.html", projects=project_dict)
+    return render_template("v3/upload.html", projects=project_dict)
 
 
+@app.route('/multi')
+@login_required
+def multi():
+    """."""
+    return render_template('v2/multitab_3.html')
 
-# @app.route('/test')
-# @login_required
-# def test():
-#     return render_template('v2/upload_tcs.html')
+
+@app.route('/dash')
+@login_required
+def dashboard():
+    """."""
+    return render_template('v3/dashboard.html')
 
 
 # @app.route('/about')

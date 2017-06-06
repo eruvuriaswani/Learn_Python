@@ -1,0 +1,69 @@
+{% extends "v2/layout.html" %} {% block css %}
+<style>
+.m {
+	border-left: 1px solid  #0D3257;
+	background-color:  #EAEEEA;
+	color: #777B88;
+	text-shadow: 1px 1px black;
+	padding: 0.5em;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.sel{
+	background-color:  #0D3257;
+	color: #EAEEEA;
+	text-shadow: 1px 1px #8C9C9A;
+}
+.unsel{
+	background-color:  #8C9C9A;
+	color: #777B88;
+}
+.row{
+	border-bottom: 1px solid #330033;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row row-sw-12">
+		<div class="col-sm-2 m">Request</div>
+		<div class="col-sm-2 m sel">Response</div>
+	</div>
+	<div class="row col-sw-12">
+		<div class="data container" id="request">
+			<div class="row row-sw-12">
+				<div class="col-sm-2 m ">Headers</div>
+				<div id="req_cookies" class="col-sm-2 m sel ">Cookies</div>
+			</div>
+		</div>
+		<div class="data container" id="Response">
+			<div class="row row-sw-12">
+				<div id="data_res_header" class="col-sm-2 m">Headers</div>
+				<div id="res_cookies" class="col-sm-2 m sel">Cookies</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+$().ready(function(){
+	$("#Response").hide();
+	$(".m").on("click", function(){
+		console.info($(this).id);
+	})
+});
+</script>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Automated Rest API Testing Cloud Services, Version: 0.0.2</title>
+  <link rel="stylesheet" href="{{ url_for( 'static', filename='v2/vendors/bootstrap/css/bootstrap.flatly.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for( 'static', filename='v2/vendors/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for( 'static', filename='v2/vendors/StylishMenu/sidebar-menu.css')}}">
+
+    <script src="{{ url_for( 'static', filename='v2/vendors/jquery/jquery-3.2.1.js')}}"></script>
+<style>
+html,body{height:100%;}
+
+.container {
+    height:100%;
+    width: 100%;
+}
+
+.fill{
+    width:100%;
+    height:100%;
+    min-height:100%;
+    /*background-color: #282828;*/
+    /*padding:10px;*/
+    /*color:#efefef;*/
+}
+.menu{
+    background-color: black;
+}
+
+</style>
+  {% block css %}
+
+  {% endblock %}
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="span row fill">
+            <div class="col-sm-2 " style="height: 100%; min-height:100%;">
+                <section class="menu" style="height: 100%">
+              <ul class="sidebar-menu">
+                  <li class="sidebar-header"><b>Welcome</b> <br>{{email}}</li>
+                <li class="sidebar-header">MAIN NAVIGATION</li>
+                <li>
+                  <a href="/">
+                    <i class="fa fa-dashboard"></i><span>Home</span>
+                  </a>
+                </li>
+                <li class="sidebar-header">Test Cases</li>
+                <li>
+                    <a href="/run">
+                      <i class="fa fa-dashboard"></i><span>Execute</span>
+                    </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fa fa-files-o"></i>
+                    <span>Manage</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="sidebar-submenu" style="display: none;">
+                    <li><a href="/upload_scenarios"><i class="fa fa-circle-o"></i> Upload</a></li>
+                    <li><a href=""><i class="fa fa-circle-o"></i> Update</a></li>
+                    </li>
+                  </ul>
+
+                <li>
+                  <a href="/">
+                    <i class="fa fa-dashboard"></i><span>Reports</span>
+                  </a>
+                </li>
+                <li class="sidebar-header">User</li>
+                <li>
+                    <a href="/">
+                      <i class="fa fa-dashboard"></i><span>Update</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/signout">
+                      <i class="fa fa-dashboard"></i><span>logout</span>
+                    </a>
+                </li>
+              </ul>
+            </section></div>
+            <div class="col-sm-10">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+  <script src="{{ url_for( 'static', filename='v2/vendors/StylishMenu/sidebar-menu.js')}}"></script>
+  <script>
+    $.sidebarMenu($('.sidebar-menu'))
+  </script>
+  {% block js %}
+    <script src="{{ url_for( 'static', filename='v2/utils/js/input_file.js')}}"></script>
+  {% endblock %}
+</body>
+
+</html>

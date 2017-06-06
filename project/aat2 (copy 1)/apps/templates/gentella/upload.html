@@ -1,0 +1,92 @@
+{% extends "gentella/layout.html" %} {% block css %}
+<!-- Switchery -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet"> -->
+<!-- starrr -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/starrr/dist/starrr.css')}}" rel="stylesheet"> -->
+<!-- bootstrap-daterangepicker -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet"> -->
+<!-- Datatables -->
+<!-- <link href="{{ url_for( 'static', filename='gentella/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet"> -->
+
+<style>
+.row {
+    margin-top: 1.5em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- top tiles -->
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">Select Project</div>
+        <div class="col-sm-6">
+            <select class="form-control">
+                {% for key, value in projects.items() %}
+                <option id="{{ key }}">{{ value }}</option>
+                 {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">Select HAR file to upload</div>
+        <div class="col-sm-6">
+            <input type="file" size="50" name="myfile" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-6">
+            <input type=submit id="upload" value="Upload Test Scenario's File" class="col-sm-12" />
+        </div>
+    </div>
+</div>
+
+
+
+    {% endblock %} {% block js %}
+    <!-- Switchery -->
+    <script src="{{ url_for( 'static', filename='gentella/vendors/switchery/dist/switchery.min.js')}}"></script>
+
+
+    <!-- Datatables -->
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net/js/jquery.dataTables.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-buttons/js/dataTables.buttons.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-buttons/js/buttons.flash.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-buttons/js/buttons.html5.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-buttons/js/buttons.print.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-responsive/js/dataTables.responsive.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/jszip/dist/jszip.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/pdfmake/build/pdfmake.min.js')}}" type="text/script"></script>
+    <script src="{{ url_for( 'static', filename='gentella/vendors/pdfmake/build/vfs_fonts.js')}}" type="text/script"></script>
+    <script>
+        $(function() {
+            // $.get("/get_my_projects", function(data) {
+            //     var items = [];
+            //     $.each(data, function(key, val) {
+            //         items.push("<li id='" + key + "'>" + val + "</li>");
+            //     });
+            //
+            //     $("<ul/>", {
+            //         "class": "my-new-list",
+            //         html: items.join("")
+            //     }).appendTo("body");
+            // });
+            $("#populate_tcs").click(function() {
+                alert("Handler for .click() called.");
+            });
+            console.log("ready!");
+        });
+        /* $("#populate_tcs").click(function(){ console.log("Clicked tcs"); }); */
+
+    </script>
+    {% endblock %}

@@ -5,16 +5,117 @@
 <link href="{{ url_for( 'static', filename='v2/vendors/datatable/css/select.dataTables.min.css')}}" rel="stylesheet">
 
 <meta name="robots" content="noindex, nofollow">
-  <style>
-    .rows {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
-  </style>
+<style>
+  .rows {
+      margin-top: 1em;
+      margin-bottom: 1em;
+  }
+
+  #exTab1 .tab-content {
+    color : white;
+    background-color: #428bca;
+    padding : 5px 15px;
+  }
+
+  #exTab2 h3 {
+    color : white;
+    background-color: #428bca;
+    padding : 5px 15px;
+  }
+
+  /* remove border radius for the tab */
+
+  #exTab1 .nav-pills > li > a {
+    border-radius: 0;
+  }
+
+  /* change border radius for the tab , apply corners on top*/
+
+  #exTab3 .nav-pills > li > a {
+    border-radius: 4px 4px 0 0 ;
+  }
+
+  #exTab3 .tab-content {
+    color : white;
+    background-color: #428bca;
+    padding : 5px 15px;
+  }
 
 
-  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/jquery.dataTables.min.js')}}"></script>
-  <script src="{{ url_for( 'static', filename='v2/vendors/datatable/js/testcases.js')}}"></script>
+
+
+/*  bhoechie tab */
+div.bhoechie-tab-container{
+  z-index: 10;
+  background-color: transparent;
+  padding: 0 !important;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  border:1px solid #ddd;
+  margin-top: 20px;
+  margin-left: 50px;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  background-clip: padding-box;
+  opacity: 0.97;
+  filter: alpha(opacity=97);
+}
+div.bhoechie-tab-menu{
+  padding-right: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+}
+div.bhoechie-tab-menu div.list-group{
+  margin-bottom: 0;
+}
+div.bhoechie-tab-menu div.list-group>a{
+  margin-bottom: 0;
+}
+div.bhoechie-tab-menu div.list-group>a .glyphicon,
+div.bhoechie-tab-menu div.list-group>a .fa {
+  color: #5A55A3;
+}
+div.bhoechie-tab-menu div.list-group>a:first-child{
+  border-top-right-radius: 0;
+  -moz-border-top-right-radius: 0;
+}
+div.bhoechie-tab-menu div.list-group>a:last-child{
+  border-bottom-right-radius: 0;
+  -moz-border-bottom-right-radius: 0;
+}
+div.bhoechie-tab-menu div.list-group>a.active,
+div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
+div.bhoechie-tab-menu div.list-group>a.active .fa{
+  background-color: #5A55A3;
+  background-image: #5A55A3;
+  color: #ffffff;
+}
+div.bhoechie-tab-menu div.list-group>a.active:after{
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  margin-top: -13px;
+  border-left: 0;
+  border-bottom: 13px solid transparent;
+  border-top: 13px solid transparent;
+  border-left: 10px solid #5A55A3;
+}
+
+div.bhoechie-tab-content{
+  background-color: #ffffff;
+  /* border: 1px solid #eeeeee; */
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+div.bhoechie-tab div.bhoechie-tab-content:not(.active){
+  display: none;
+}
+</style>
+  <script src="{{url_for('static', filename='v2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{url_for('static', filename='v2/vendors/datatable/js/testcases.js')}}"></script>
 
 {% endblock %}
 
@@ -30,49 +131,63 @@
         </select>
     </div>
     <div class="col-sm-2">
-        <input type="button" id="get_tcs" class="form-control btn-primary" value="Get Api List">
+        <input type="button" id="get_tcs" class="form-control btn-primary" value="Get Api List"></div>
+    <div class="row rows">
+      <div class="col-sm-2">List of Test Cases</div>
+      <div class="col-sm-3">List of Test Cases</div>
+      <div class="col-sm-7">List of Test Cases</div>
+    </div>
+    <div class="row rows">
+      <div class="col-sm-2 list-group" id="testcases">
+      </div>
+      <div class="col-sm-3 list-group" id="apis"></div>
+      <div class="col-sm-7">
+      </div>
+    </div>
+  </div> 
+</div>
+
+<ul class="tabs main">
+  <li><a href="#1" class="main">Main Tab 1</a></li>
+  <li><a href="#1" class="main">Main Tab 2</a></li>
+</ul>
+
+<div class="panes main">
+  <div>this is main tab 1 content. it includes another set of tabs
+
+    <ul class="tabs nested">
+      <li><a href="#2" class="nested">Nested Tab 1</a></li>
+      <li><a href="#2" class="nested">Nested Tab 2</a></li>
+    </ul>
+
+    <div class="panes nested">
+      <div>this is my nested tab 1 content</div>
+      <div>this is my nested tab 2 content</div>
     </div>
 
-
-    <div class="row rows">
-      <div class="col-sm-2">
-      <div class="col-sm-12">List of Test Cases</div>
-          
-        <!--   <a href="#" class="list-group-item">Second item</a>
-          <a href="#" class="list-group-item">Third item</a> -->
-        </div>
-      <div class="col-sm-2">
-      <div class="col-sm-12">List of Test Cases</div>
-          
-        <!--   <a href="#" class="list-group-item">Second item</a>
-          <a href="#" class="list-group-item">Third item</a> -->
-        </div>
-      <div class="col-sm-8">
-      <div class="col-sm-12">List of Test Cases</div>
-          
-        <!--   <a href="#" class="list-group-item">Second item</a>
-          <a href="#" class="list-group-item">Third item</a> -->
-        </div>
-      </div>
-      </div>
-      <div class="row rows">
-      <div class="col-sm-2">
-        <div class="list-group col-sm-12" id="testcases">
-        </div>
-      </div>
-      <div class="col-sm-2">
-        <div class="list-group col-sm-12" id="apis">
-        </div>
-      <div class="col-sm-8">
-      <div class="col-sm-12">List of Test Cases</div>
-       
-          
-        <!--   <a href="#" class="list-group-item">Second item</a>
-          <a href="#" class="list-group-item">Third item</a> -->
-        </div>
-      </div>
-     </form>
+  </div>
+  <div>this is my main tab 2 content</div>
 </div>
 {% endblock %} {% block js %}
+<script>
+$(document).ready(function() {
+  $("ul.main.tabs").tabs("div.main.panes > div", {tabs: 'a.main'});
 
+  $("ul.nested.tabs").tabs("div.nested.panes > div", {tabs: 'a.nested'});
+});
+// $(document).ready(function() {
+//     $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+//         e.preventDefault();
+//         $(this).siblings('a.active').removeClass("active");
+//         $(this).addClass("active");
+//         var index = $(this).index();
+//         $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+//         $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+//     });
+// });
+// $('#myTab a').click(function (e) {
+//   e.preventDefault()
+//   $(this).tab('show')
+// })
+</script>
 {% endblock %}

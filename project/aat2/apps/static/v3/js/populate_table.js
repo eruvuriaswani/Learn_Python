@@ -123,7 +123,7 @@ $(document).ready(function (){
          async: true,
          data: json_data,
          success: function(msg){
-            // console.info(msg);
+            console.info(msg);
             $("#result").empty();
             $("#result").append(msg['msg']);
             // $("#result").val(msg);

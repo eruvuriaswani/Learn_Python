@@ -42,6 +42,18 @@ def set_api_validation():
     return render_template("v2/edit_apis.html", projects=project_dict)
 
 
+# @app.route("/get_apis", methods=['GET'])
+# @login_required
+# @nocache
+# def get_apis():
+#     """View the existing testcases for the project."""
+#     tc_id = request.args.get('tc_id')
+#     testcases = ApiRequests.query \
+#                            .filter(ApiRequests.testcases.any(id=tc_id)) \
+#                            .options(db.load_only('id', 'url')).all()
+#     return jsonify(data=[(a.id, a.url.rsplit('/', 1)[1]) for a in testcases])
+
+
 @app.route("/get_tcs", methods=['GET'])
 @login_required
 @nocache
@@ -194,7 +206,6 @@ def uploaded_file():
 # @login_required
 def remove_apis():
     """."""
-    # print("<<", request.form, ">>")
     data = request.form
     for d in data.getlist('api_list'):
         # TODO :
@@ -254,6 +265,11 @@ def multi():
 def dashboard():
     """."""
     return render_template('v3/dashboard.html')
+
+# @app.route('/test')
+# @login_required
+# def test():
+#     return render_template('v2/upload_tcs.html')
 
 
 # @app.route('/about')

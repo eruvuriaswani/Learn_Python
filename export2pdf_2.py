@@ -1,4 +1,4 @@
-import glob
+﻿import glob
 import subprocess
 
 FORMAT = "pdf"
@@ -12,6 +12,9 @@ def exportPdf(srcFile):
 
 
 lstFiles = []
-for filename in glob.iglob('**/*.ipynb', recursive=True):
-    lstFiles.append(filename)
-    exportPdf(filename)
+#for filename in glob.iglob('**/*.ipynb', recursive=True):
+#    lstFiles.append(filename)
+
+lstFile = [filename for glob.iglob('**/*.ipynb', recursive=True)]
+print(listFile)
+map(exportPdf, lstFile)

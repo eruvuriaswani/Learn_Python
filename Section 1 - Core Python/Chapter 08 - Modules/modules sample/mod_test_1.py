@@ -1,0 +1,3 @@
+import modOne
+
+modOne.test()

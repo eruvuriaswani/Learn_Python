@@ -8,23 +8,23 @@ from sqlalchemy.orm import sessionmaker, relationship, backref
 Base = declarative_base()
 
 
-class Parent(Base):
-    __tablename__ = 'parent'
+class User(Base):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    child_id = Column(Integer, ForeignKey('child.id'))
-    child = relationship("Child", 
-                         backref=backref("parent", uselist=False), 
-                         uselist=False)
+    name = Column(String)
+    card = Column(Integer, ForeignKey('card.id'))
+    child = relationship("Card", backref=backref("user", uselist=False), uselist=False)
 
 
-class Child(Base):
-    __tablename__ = 'child'
+class Card(Base):
+    __tablename__ = 'card'
     id = Column(Integer, primary_key=True)
+    number = Column(String)
     # parent_id = Column(Integer, ForeignKey('parent.id'))
     # parentage = relationship("Parent", backref=backref("child", uselist=False))
 
 
-DB_FILE = "one2one_2.1_temp.sqlite3"
+DB_FILE = "idcard.sqlite3"
 
 try:
     os.remove(DB_FILE)
@@ -36,13 +36,9 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-#oChild = session.query(Child).get(1)
-#oParent = oChild.parent
+mycard = Card(number="007007", user=User(name="mayank"))
 
-# oParent2 = Parent()
-# oParent.child = Child()
-
-
+session.add(mycard)
 session.flush()
 session.commit()
 

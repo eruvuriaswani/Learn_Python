@@ -40,10 +40,10 @@ class School(Base):
     __tablename__ = 'school'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    student = relationship("Students")
+    student = relationship("Students", backref="cream")
 
 
-DB_FILE = "one2many_basic.sqlite"
+DB_FILE = "one2many_basic_backref.sqlite"
 
 try:
     os.remove(DB_FILE)
@@ -59,7 +59,7 @@ dms = School()
 dms.name = "Demonstration Multipurpose Higher Secondary School"
 session.add(dms)
 
-#session.add(School(name="CDAC"))
+session.add(School(name="CDAC"))
 session.flush()
 
 session.commit()
@@ -96,23 +96,23 @@ cdac_students = [
 ## select * from school where name='CDAC' excluding first
 cdac = session.query(School).filter_by(name="CDAC").first()
 #
-session.add_all([Students(name=student, school=cdac)
+session.add_all([Students(name=student, cream=cdac)
                  for student in cdac_students])
-#session.flush()
-#session.commit()
+session.flush()
+session.commit()
 ## # --------------------------------------------------
 #print("^"*30)
-#print(session.dirty)
+print(session.dirty)
 
-#mayank.name = "mayank Johri"
+mayank.name = "mayank Johri"
 
 # """
 # session.dirty -
 # """
 ### HOW TO USE
-#print(session.dirty)
-#session.commit()
-#print(session.dirty)
+print(session.dirty)
+session.commit()
+print(session.dirty)
 #print(help(session.dirty))
 #"""
 #Querying

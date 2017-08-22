@@ -11,6 +11,10 @@ def increment(x):
     return x + 1
 
 
-def test_answer():
+def test_will_fail():
     """."""
     assert increment(3) == 5
+
+def test_will_pass():
+    """."""
+    assert increment(4) == 5

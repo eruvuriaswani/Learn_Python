@@ -49,7 +49,7 @@ try:
     os.remove(DB_FILE)
 except Exception as e:
     print(e)
-
+    
 engine = create_engine('sqlite:///' + DB_FILE, echo=True)
 Base.metadata.create_all(engine)
 
@@ -68,36 +68,36 @@ mayank = Students(name="Mayank Johri")
 dms.student.append(mayank)
 
 dms.student.append(Students(name="Anuja Johri"))
+#session.add(mayank)
 session.add(dms)
 session.flush()
 
 session.commit()
 
-students = [
-    "Sachin Shah",
-    "Satendra",
-    "Rajeev Chaturvedi"]
+#students = [
+#    "Sachin Shah",
+#    "Satendra",
+#    "Rajeev Chaturvedi"]
 
-for student in students:
-    dms.student.append(Students(name=student))
-
+#for student in students:
+#    dms.student.append(Students(name=student))
 #dms.student.append([Students(name=student, school=dms) for student in students])
 #session.add(dms)
-session.flush()
-session.commit()
+#session.flush()
+#session.commit()
 #
 ## --------------------------------------------------
-cdac_students = [
-    "Manish Gupta",
-    "Viral Kamdar",
-    "Pinakin Purohit",
-    "Nitin Srivastava"]
+#cdac_students = [
+#    "Manish Gupta",
+#    "Viral Kamdar",
+#    "Pinakin Purohit",
+#    "Nitin Srivastava"]
 #
 ## select * from school where name='CDAC' excluding first
-cdac = session.query(School).filter_by(name="CDAC").first()
+#cdac = session.query(School).filter_by(name="CDAC").first()
 #
-session.add_all([Students(name=student, school=cdac)
-                 for student in cdac_students])
+#session.add_all([Students(name=student, school=cdac)
+#                 for student in cdac_students])
 #session.flush()
 #session.commit()
 ## # --------------------------------------------------

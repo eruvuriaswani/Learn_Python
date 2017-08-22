@@ -10,7 +10,6 @@ execution command: -v
 
 class User:
     """."""
-
     name = "Nainjot"
     age = 32
 

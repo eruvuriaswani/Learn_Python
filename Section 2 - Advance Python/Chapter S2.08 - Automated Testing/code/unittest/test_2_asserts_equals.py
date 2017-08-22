@@ -32,7 +32,7 @@ class TestUM(unittest.TestCase):
         pass
  
     def test_numbers_3_4(self):
-        self.assertEqual( Mylibrary.multiply(3,4), 12)
+        self.assertEqual(Mylibrary.multiply(3,4), 12)
  
     def test_strings_a_3(self):
         self.assertEqual(Mylibrary.multiply('a',3), 'aaa')
@@ -41,19 +41,19 @@ class TestUM(unittest.TestCase):
         a = d = 10
         b = 12
         c = 10
-        print(self.assertEqual(a, a))
-        print(self.assertEqual(a,b))
-        print(self.assertEqual(a,c))
-        print(self.assertEqual(a,d))
+        self.assertEqual(a, a)
+        #self.assertEqual(a, b)
+        self.assertEqual(a, c)
+        self.assertEqual(a, d)
     
     def test_others_a_a(self):
         a = 10
-        print(self.assertEqual(a, a))
+        self.assertEqual(a, a)
         
     def test_others_a_b(self):
         a = 10
         b = 12
-        print(self.assertEqual(a,b))
+        print(self.assertEqual(a, b))
         
     def test_others_a_c(self):
         a = 10

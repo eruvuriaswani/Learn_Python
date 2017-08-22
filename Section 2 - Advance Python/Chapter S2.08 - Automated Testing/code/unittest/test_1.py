@@ -3,7 +3,8 @@ import unittest
 def test_mytest():
     """this will never run"""
     print("test_mytest")
-    
+
+
 class TestStringMethods(unittest.TestCase):
 
     def test_upper(self):
@@ -20,9 +21,10 @@ class TestStringMethods(unittest.TestCase):
         # check that s.split fails when the separator is not a string
         with self.assertRaises(TypeError):
             s.split(2)
-    
+
     def test_mymymy(self):
         print("TESTTEST")
+
 
 if __name__ == '__main__':
     unittest.main()

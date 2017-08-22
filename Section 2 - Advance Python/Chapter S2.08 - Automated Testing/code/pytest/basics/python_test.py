@@ -19,7 +19,7 @@ class Test_PythonHomePage:
         """ teardown any state that was previously setup with a call to
         setup_class.
         """
-        pass
+        print("Hello from teardown")
 
     def test_search(self):
-        assert print(self.conf['Browser']) == "firefox"
+        assert self.conf['Browser'] == "firefox"

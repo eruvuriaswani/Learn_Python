@@ -9,7 +9,7 @@ for Many to one relationship using sqlalchemy
 
 Tip:
 -----
-- Plase a foreign key in the parent table referencing the one.
+- Place a foreign key in the parent table referencing the one.
 - `relationship` is declared on the many, where a new scalar-holding
 attribute will be created
 - `Bidirectional` behavior can be achieved by

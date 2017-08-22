@@ -12,9 +12,7 @@ class Parent(Base):
     __tablename__ = 'parent'
     id = Column(Integer, primary_key=True)
     child_id = Column(Integer, ForeignKey('child.id'))
-    child = relationship("Child", 
-                         backref=backref("parent", uselist=False), 
-                         uselist=False)
+    child = relationship("Child", backref=backref("parent", uselist=False))
 
 
 class Child(Base):
@@ -36,8 +34,8 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-#oChild = session.query(Child).get(1)
-#oParent = oChild.parent
+oChild = session.query(Child).get(1)
+# oParent = oChild.parent
 
 # oParent2 = Parent()
 # oParent.child = Child()

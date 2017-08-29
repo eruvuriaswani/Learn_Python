@@ -7,5 +7,5 @@ instruments = ['Drums', 'Flute', 'Harmonium', "Guitar"]
 # for each instrument in the list of instruments
 for instrument in instruments:
     print (instrument)
-    print("#")
+#    print("#")
 print("Hello")

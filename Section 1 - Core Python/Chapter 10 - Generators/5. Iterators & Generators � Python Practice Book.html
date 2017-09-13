@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)http://anandology.com/python-practice-book/iterators.html -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Iterators &amp; Generators — Python Practice Book</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="./5. Iterators &amp; Generators — Python Practice Book_files/theme.css" type="text/css">
+  
+
+  
+
+  
+    <link rel="top" title="Python Practice Book" href="http://anandology.com/python-practice-book/index.html">
+        <link rel="next" title="6. Functional Programming" href="http://anandology.com/python-practice-book/functional-programming.html">
+        <link rel="prev" title="4. Object Oriented Programming" href="http://anandology.com/python-practice-book/object_oriented_programming.html">
+ 
+
+<script type="text/javascript" async="" src="./5. Iterators &amp; Generators — Python Practice Book_files/ga.js"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31293347-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+  
+  <script src="./5. Iterators &amp; Generators — Python Practice Book_files/modernizr.min.js"></script>
+
+<script type="text/javascript" async="" src="./5. Iterators &amp; Generators — Python Practice Book_files/in.php"></script></head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="http://anandology.com/python-practice-book/index.html" class="icon icon-home"> Python Practice Book
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="http://anandology.com/python-practice-book/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="http://anandology.com/python-practice-book/getting-started.html">1. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://anandology.com/python-practice-book/working-with-data.html">2. Working with Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://anandology.com/python-practice-book/modules.html">3. Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://anandology.com/python-practice-book/object_oriented_programming.html">4. Object Oriented Programming</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="http://anandology.com/python-practice-book/iterators.html"><span class="toctree-expand"></span>5. Iterators &amp; Generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="http://anandology.com/python-practice-book/iterators.html#iterators"><span class="toctree-expand"></span>5.1. Iterators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="http://anandology.com/python-practice-book/iterators.html#the-iteration-protocol">5.1.1. The Iteration Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="http://anandology.com/python-practice-book/iterators.html#generators">5.2. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://anandology.com/python-practice-book/iterators.html#generator-expressions"><span class="toctree-expand"></span>5.3. Generator Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="http://anandology.com/python-practice-book/iterators.html#example-reading-multiple-files">5.3.1. Example: Reading multiple files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="http://anandology.com/python-practice-book/iterators.html#itertools">5.4. Itertools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="http://anandology.com/python-practice-book/functional-programming.html">6. Functional Programming</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="http://anandology.com/python-practice-book/index.html">Python Practice Book</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="http://anandology.com/python-practice-book/index.html">Docs</a> »</li>
+      
+    <li>5. Iterators &amp; Generators</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="http://anandology.com/python-practice-book/_sources/iterators.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="iterators-generators">
+<h1>5. Iterators &amp; Generators<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#iterators-generators" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="iterators">
+<h2>5.1. Iterators<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#iterators" title="Permalink to this headline">¶</a></h2>
+<p>We use <code class="docutils literal"><span class="pre">for</span></code> statement for looping over a list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">i</span><span class="p">,</span>
+<span class="gp">...</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>If we use it with a string, it loops over its characters.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s">"python"</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">c</span>
+<span class="gp">...</span>
+<span class="go">p</span>
+<span class="go">y</span>
+<span class="go">t</span>
+<span class="go">h</span>
+<span class="go">o</span>
+<span class="go">n</span>
+</pre></div>
+</div>
+<p>If we use it with a dictionary, it loops over its keys.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">{</span><span class="s">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">k</span>
+<span class="gp">...</span>
+<span class="go">y</span>
+<span class="go">x</span>
+</pre></div>
+</div>
+<p>If we use it with a file, it loops over lines of the file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">"a.txt"</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">line</span><span class="p">,</span>
+<span class="gp">...</span>
+<span class="go">first line</span>
+<span class="go">second line</span>
+</pre></div>
+</div>
+<p>So there are many types of objects which can be used with a for loop. These are called iterable objects.</p>
+<p>There are many functions which consume these iterables.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">","</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">])</span>
+<span class="go">'a,b,c'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">","</span><span class="o">.</span><span class="n">join</span><span class="p">({</span><span class="s">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">'y,x'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="s">"python"</span><span class="p">)</span>
+<span class="go">['p', 'y', 't', 'h', 'o', 'n']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">({</span><span class="s">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">['y', 'x']</span>
+</pre></div>
+</div>
+<div class="section" id="the-iteration-protocol">
+<h3>5.1.1. The Iteration Protocol<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#the-iteration-protocol" title="Permalink to this headline">¶</a></h3>
+<p>The built-in function <code class="docutils literal"><span class="pre">iter</span></code> takes an iterable object and returns an iterator.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">&lt;listiterator object at 0x1004ca850&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
+</pre></div>
+</div>
+<p>Each time we call the <code class="docutils literal"><span class="pre">next</span></code> method on the iterator gives us the next
+element. If there are no more elements, it raises a <cite>StopIteration</cite>.</p>
+<p>Iterators are implemented as classes. Here is an iterator that works like built-in <code class="docutils literal"><span class="pre">xrange</span></code> function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">yrange</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">__iter__</span></code> method is what makes an object iterable. Behind the scenes, the
+<cite>iter</cite> function calls <code class="docutils literal"><span class="pre">__iter__</span></code> method on the given object.</p>
+<p>The return value of <code class="docutils literal"><span class="pre">__iter__</span></code> is an iterator. It should have a <code class="docutils literal"><span class="pre">next</span></code>
+method and raise <code class="docutils literal"><span class="pre">StopIteration</span></code> when there are no more elements.</p>
+<p>Lets try it out:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">yrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">14</span>, in <span class="n">next</span>
+<span class="gr">StopIteration</span>
+</pre></div>
+</div>
+<p>Many built-in functions accept iterators as arguments.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">yrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">yrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>In the above case, both the iterable and iterator are the same object. Notice that
+the <code class="docutils literal"><span class="pre">__iter__</span></code> method returned <code class="docutils literal"><span class="pre">self</span></code>. It need not be the case always.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">zrange</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">zrange_iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">zrange_iter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Iterators are iterables too.</span>
+        <span class="c"># Adding this functions to make them so.</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If both iteratable and iterator are the same object, it is consumed in a single iteration.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">yrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="n">zrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+</pre></div>
+</div>
+<p><strong>Problem 1: </strong>Write an iterator class <code class="docutils literal"><span class="pre">reverse_iter</span></code>, that takes a list and
+iterates it from the reverse direction. ::</p><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">reverse_iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
+</pre></div>
+</div>
+<p></p>
+</div>
+</div>
+<div class="section" id="generators">
+<h2>5.2. Generators<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#generators" title="Permalink to this headline">¶</a></h2>
+<p>Generators simplifies creation of iterators.  A generator is a function that produces a sequence of results instead of a single value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">yrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Each time the <code class="docutils literal"><span class="pre">yield</span></code> statement is executed the function generates a new value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">yrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span>
+<span class="go">&lt;generator object yrange at 0x401f30&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
+</pre></div>
+</div>
+<p>So a generator is also an iterator. You don’t have to worry about the iterator protocol.</p>
+<p>The word “generator” is confusingly used to mean both the function that
+generates and what it generates. In this chapter, I’ll use the word “generator”
+to mean the genearted object and “generator function” to mean the function that
+generates it.</p>
+<p>Can you think about how it is working internally?</p>
+<p>When a generator function is called, it returns a generator object without
+even beginning execution of the function. When <code class="docutils literal"><span class="pre">next</span></code> method is called for the
+first time, the function starts executing until it reaches <code class="docutils literal"><span class="pre">yield</span></code> statement.
+The yielded value is returned by the <code class="docutils literal"><span class="pre">next</span></code> call.</p>
+<p>The following example demonstrates the interplay between <code class="docutils literal"><span class="pre">yield</span></code> and call to
+<code class="docutils literal"><span class="pre">next</span></code> method on generator object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">"begin"</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">print</span> <span class="s">"before yield"</span><span class="p">,</span> <span class="n">i</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">i</span>
+<span class="gp">... </span>        <span class="k">print</span> <span class="s">"after yield"</span><span class="p">,</span> <span class="n">i</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">"end"</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">begin</span>
+<span class="go">before yield 0</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">after yield 0</span>
+<span class="go">before yield 1</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">after yield 1</span>
+<span class="go">before yield 2</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">after yield 2</span>
+<span class="go">end</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Lets see an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">integers</span><span class="p">():</span>
+    <span class="sd">"""Infinite sequence of integers."""</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">squares</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">integers</span><span class="p">():</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span>
+
+<span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">"""Returns first n values from the given sequence."""</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">print</span> <span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">squares</span><span class="p">())</span> <span class="c"># prints [1, 4, 9, 16, 25]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generator-expressions">
+<h2>5.3. Generator Expressions<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#generator-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Generator Expressions are generator version of list comprehensions. They look
+like list comprehensions, but returns a generator back instead of a list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">&lt;generator object &lt;genexpr&gt; at 0x401f08&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">285</span>
+</pre></div>
+</div>
+<p>We can use the generator expressions as arguments to various functions that
+consume iterators.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="go">285</span>
+</pre></div>
+</div>
+<p>When there is only one argument to the calling function, the parenthesis around
+generator expression can be omitted.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="go">285</span>
+</pre></div>
+</div>
+<p>Another fun example:</p>
+<p>Lets say we want to find first 10 (or any n) pythogorian triplets. A triplet
+<code class="docutils literal"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code> is called pythogorian triplet if <code class="docutils literal"><span class="pre">x*x</span> <span class="pre">+</span> <span class="pre">y*y</span> <span class="pre">==</span> <span class="pre">z*z</span></code>.</p>
+<p>It is easy to solve this problem if we know till what value of <cite>z</cite> to test for.
+But we want to find first n pythogorian triplets.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pyt</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">integers</span><span class="p">()</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">take</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">pyt</span><span class="p">)</span>
+<span class="go">[(3, 4, 5), (6, 8, 10), (5, 12, 13), (9, 12, 15), (8, 15, 17), (12, 16, 20), (15, 20, 25), (7, 24, 25), (10, 24, 26), (20, 21, 29)]</span>
+</pre></div>
+</div>
+<div class="section" id="example-reading-multiple-files">
+<h3>5.3.1. Example: Reading multiple files<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#example-reading-multiple-files" title="Permalink to this headline">¶</a></h3>
+<p>Lets say we want to write a program that takes a list of filenames as arguments
+and prints contents of all those files, like <code class="docutils literal"><span class="pre">cat</span></code> command in unix.</p>
+<p>The traditional way to implement it is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">line</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Now, lets say we want to print only the line which has a particular substring,
+like <code class="docutils literal"><span class="pre">grep</span></code> command in unix.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">grep</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">line</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Both these programs have lot of code in common. It is hard to move the common part
+to a function. But with generators makes it possible to do it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">readfiles</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">line</span>
+
+<span class="k">def</span> <span class="nf">grep</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">printlines</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">line</span><span class="p">,</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">readfiles</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">grep</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span>
+    <span class="n">printlines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The code is much simpler now with each function doing one small thing. We can
+move all these functions into a separate module and reuse it in other programs.</p>
+<p><strong>Problem 2: </strong>Write a program that takes one or more filenames as arguments and
+prints all the lines which are longer than 40 characters.</p>
+<p><strong>Problem 3: </strong>Write a function <code class="docutils literal"><span class="pre">findfiles</span></code> that recursively descends the
+directory tree for the specified directory and generates paths of all the
+files in the tree.</p>
+<p><strong>Problem 4: </strong>Write a function to compute the number of python files (.py
+extension) in a specified directory recursively.</p>
+<p><strong>Problem 5: </strong>Write a function to compute the total number of lines of code in
+all python files in the specified directory recursively.</p>
+<p><strong>Problem 6: </strong>Write a function to compute the total number of lines of code,
+ignoring empty and comment lines, in all python files in the specified
+directory recursively.</p>
+<p><strong>Problem 7: </strong>Write a program <code class="docutils literal"><span class="pre">split.py</span></code>, that takes an integer <code class="docutils literal"><span class="pre">n</span></code> and a
+filename as command line arguments and splits the file into multiple small
+files with each having <code class="docutils literal"><span class="pre">n</span></code> lines.</p>
+</div>
+</div>
+<div class="section" id="itertools">
+<h2>5.4. Itertools<a class="headerlink" href="http://anandology.com/python-practice-book/iterators.html#itertools" title="Permalink to this headline">¶</a></h2>
+<p>The itertools module in the standard library provides lot of intersting tools to work with iterators.</p>
+<p>Lets look at some of the interesting functions.</p>
+<p><strong>chain</strong> – chains multiple iterators together.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">it1</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it2</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">it1</span><span class="p">,</span> <span class="n">it2</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
+<p><strong>izip</strong> – iterable version of zip</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="gp">...</span>
+<span class="go">a 1</span>
+<span class="go">b 2</span>
+<span class="go">c 3</span>
+</pre></div>
+</div>
+<p><strong>Problem 8: </strong>Write a function <code class="docutils literal"><span class="pre">peep</span></code>, that takes an iterator as argument and
+returns the first element and an equivalant iterator.</p><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">it1</span> <span class="o">=</span> <span class="n">peep</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">it1</span><span class="p">)</span>
+<span class="go">0 [0, 1, 2, 3, 4]</span>
+</pre></div>
+</div>
+<p></p>
+<p><strong>Problem 9: </strong>The built-in function <code class="docutils literal"><span class="pre">enumerate</span></code> takes an iteratable and returns
+an iterator over pairs (index, value) for each value in the source.</p><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">])</span>
+<span class="go">[(0, "a"), (1, "b"), (2, "c")]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span>
+<span class="gp">...</span>
+<span class="go">0 a</span>
+<span class="go">1 b</span>
+<span class="go">2 c</span>
+</pre></div>
+</div>
+<p>Write a function <code class="docutils literal"><span class="pre">my_enumerate</span></code> that works like <code class="docutils literal"><span class="pre">enumerate</span></code>.</p>
+<p></p>
+<p><strong>Problem 10: </strong>Implement a function <code class="docutils literal"><span class="pre">izip</span></code> that works like <code class="docutils literal"><span class="pre">itertools.izip</span></code>.</p>
+<p><strong>Further Reading</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.dabeaz.com/generators-uk/">Generator Tricks For System Programers</a>
+by <a class="reference external" href="http://dabeaz.com/">David Beazly</a> is an excellent in-depth introduction to
+generators and generator expressions.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="http://anandology.com/python-practice-book/functional-programming.html" class="btn btn-neutral float-right" title="6. Functional Programming" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http://anandology.com/python-practice-book/object_oriented_programming.html" class="btn btn-neutral" title="4. Object Oriented Programming" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2014, <a href="http://anandology.com/">Anand Chitipothu</a>.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2014-08-10',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="./5. Iterators &amp; Generators — Python Practice Book_files/jquery.js"></script>
+      <script type="text/javascript" src="./5. Iterators &amp; Generators — Python Practice Book_files/underscore.js"></script>
+      <script type="text/javascript" src="./5. Iterators &amp; Generators — Python Practice Book_files/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="./5. Iterators &amp; Generators — Python Practice Book_files/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+
+<script src="./5. Iterators &amp; Generators — Python Practice Book_files/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init(66579110); }catch(e){}</script>
+<noscript>&lt;p&gt;&lt;img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66579110ns.gif" /&gt;&lt;/p&gt;</noscript>
+
+
+
+
+</body></html>

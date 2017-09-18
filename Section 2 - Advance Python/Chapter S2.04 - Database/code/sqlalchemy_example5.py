@@ -35,7 +35,6 @@ Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
-session_dec = Session()
 ed_user = User(name='Meenu', fullname='Meenakshi Johri', password='meenuInIndia')
 ad = Address(house_no="20", house_name="Raj Ghar", city= "Jaipur")
 print(ed_user.id)

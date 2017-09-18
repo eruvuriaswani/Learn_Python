@@ -66,7 +66,6 @@ mayank.school = dms
 session.add(mayank)
 session.add(Students(name="Anuja Johri", school=dms))
 session.flush()
-
 session.commit()
 
 students = [

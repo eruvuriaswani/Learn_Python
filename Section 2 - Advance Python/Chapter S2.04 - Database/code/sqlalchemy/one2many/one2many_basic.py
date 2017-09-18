@@ -9,7 +9,7 @@ for Many to one relationship using sqlalchemy
 
 Tip:
 -----
-- Plase a foreign key in the parent table referencing the one.
+- Place a foreign key in the parent table referencing the one.
 - `relationship` is declared on the many, where a new scalar-holding
 attribute will be created
 - `Bidirectional` behavior can be achieved by
@@ -59,9 +59,8 @@ dms = School()
 dms.name = "Demonstration Multipurpose Higher Secondary School"
 session.add(dms)
 
-#session.add(School(name="CDAC"))
+session.add(School(name="CDAC"))
 session.flush()
-
 session.commit()
 
 mayank = Students(name="Mayank Johri")

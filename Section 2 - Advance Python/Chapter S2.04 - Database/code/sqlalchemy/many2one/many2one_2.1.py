@@ -43,7 +43,6 @@ class School(Base):
     students = relationship("Students", back_populates="school",
                             cascade="all, delete, delete-orphan")
 
-
 DB_FILE = "many2one_2.1.sqlite3"
 
 try:

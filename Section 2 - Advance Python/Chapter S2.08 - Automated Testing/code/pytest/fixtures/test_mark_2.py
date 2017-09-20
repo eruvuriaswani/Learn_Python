@@ -1,7 +1,6 @@
 """
--s -v  -m "not trn" test_mark_1.py
+pytest -sv  -m "parez" test_mark_1.py 
 
--s -v  -m "trn, tn" test_mark_1.py
 """
 
 
@@ -17,6 +16,7 @@ def i_set_things_up(request):
     return projector
 
 @pytest.mark.shssael
+@pytest.mark.parez
 def test_nothing(i_set_things_up):
     assert i_set_things_up['status'] == 'doing fine'
 
